@@ -306,7 +306,7 @@ export async function buildStaticBadges() {
     }
     if (Array.isArray(parsed.patrons)) {
       patronsList = parsed.patrons.map((p: any) => ({
-        handle: p.github || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]/g, "") : "patron"),
+        handle: (p.github || p.name || "patron").toLowerCase().replace(/[^a-z0-9_-]/g, ""),
         name: p.name,
         tier: p.tier,
         github: p.github,

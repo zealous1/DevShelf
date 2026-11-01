@@ -1,9 +1,9 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-11-01T08:51:58.527Z",
+  "updatedAt": "2026-11-01T09:04:39.568Z",
   "slug": "ai",
   "name": "AI Agents & Local LLMs",
-  "count": 90,
+  "count": 99,
   "items": [
     {
       "name": "AgentShield",
@@ -1485,6 +1485,105 @@
       "category": "AI Agents & Local LLMs",
       "description": "Open-source project workspace for teams and AI agents, with task delegation, persistent sandbox workspaces, and deliverable review. Self-hosting uses separately configured model-provider credentials.",
       "language": "TypeScript / Bun",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "SkillPrism",
+      "repo": "https://github.com/RitualDev-Lab/SkillPrism",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Progressive skill disclosure and context compaction engine for autonomous AI coding agents. Indexes enterprise tool schemas out-of-context and dynamically discloses only required tools to prevent prompt bloat.",
+      "language": "TypeScript",
+      "license": "Apache-2.0",
+      "featured": true,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "DBShield",
+      "repo": "https://github.com/RitualDev-Lab/DBShield",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Safety-first database guardrail and transaction-rollback sandboxing MCP server for AI coding agents. Intercepts unconstrained mutations, bulk deletes, lock escalations, and masks sensitive PII in real-time.",
+      "language": "TypeScript",
+      "license": "MIT",
+      "featured": true,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Pydantic AI",
+      "repo": "https://github.com/pydantic/pydantic-ai",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Production-grade generative AI agent framework built by the Pydantic team. Provides type-safe validation, structured response generation, dependency injection, and stream inspection for LLM applications.",
+      "language": "Python",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "LangGraph",
+      "repo": "https://github.com/langchain-ai/langgraph",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Multi-agent orchestration library for building stateful, cyclic AI agent workflows with LangChain. Supports long-term human-in-the-loop memory, streaming step-by-step state recovery, and fault-tolerant graphs.",
+      "language": "Python / TypeScript",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Browser Use",
+      "repo": "https://github.com/browser-use/browser-use",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Open-source web automation library connecting LLMs to live browser sessions. Allows autonomous agents to navigate web apps, extract deep elements, click buttons, solve captchas, and automate online workflows.",
+      "language": "Python",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Smolagents",
+      "repo": "https://github.com/huggingface/smolagents",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Lightweight, developer-first AI agent library by Hugging Face where agents execute code actions directly in Python instead of verbose JSON tool-call steps, minimizing token overhead and execution latency.",
+      "language": "Python",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Mastra",
+      "repo": "https://github.com/mastra-ai/mastra",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Opinionated TypeScript agent framework for building, testing, and deploying production AI applications. Features typed workflows, evaluation metrics, retrieval-augmented generation (RAG), and local dev servers.",
+      "language": "TypeScript",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Docling",
+      "repo": "https://github.com/DS4SD/docling",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Efficient open-source document parser that converts complex PDF, DOCX, and PPTX documents into structured Markdown and JSON with native table extraction, formula recognition, and LLM-ready chunking.",
+      "language": "Python",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "MarkItDown",
+      "repo": "https://github.com/microsoft/markitdown",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Microsoft utility for converting multi-format documents (PDF, PowerPoint, Word, Excel, Images, Audio, HTML) into clean Markdown for indexing in AI agent pipelines, vector databases, and LLM contexts.",
+      "language": "Python",
       "license": "MIT",
       "featured": false,
       "type": "ai",

@@ -3,7 +3,7 @@
   "version": "1.1.2",
   "private": false,
   "type": "module",
-  "description": "The open-source community directory for discovering 550+ developer tools, free APIs, AI agents, and open-source projects. Includes terminal CLI and MCP server.",
+  "description": "The open-source community directory for discovering 560+ developer tools, free APIs, AI agents, and open-source projects. Includes terminal CLI and MCP server.",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -72,5 +72,9 @@
     "tailwindcss": "^3.4.19",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^4.6.7"
   }
 }

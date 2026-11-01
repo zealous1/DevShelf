@@ -645,5 +645,14 @@
     "language": "Swift",
     "license": "MIT",
     "featured": false
+  },
+  {
+    "name": "web-sec-auditor",
+    "repo": "https://github.com/RitualDev-Lab/web-sec-auditor",
+    "category": "Security & Vulnerability Auditing",
+    "description": "Unified DAST, SAST, secret hunter, and SCA vulnerability auditor for web apps and APIs. Emits OASIS SARIF v2.1.0 reports, executive HTML dashboards, and context-aware unified git diff auto-patches.",
+    "language": "TypeScript",
+    "license": "MIT",
+    "featured": true
   }
 ]

@@ -34,20 +34,20 @@
 <table>
 <tr>
 <td align="center"><b>🌐 Free APIs</b><br><code>108</code></td>
-<td align="center"><b>🤖 AI & LLMs</b><br><code>90</code></td>
-<td align="center"><b>⚡ CLI Tools</b><br><code>123</code></td>
-<td align="center"><b>🧪 Testing & QA</b><br><code>65</code></td>
+<td align="center"><b>🤖 AI & LLMs</b><br><code>99</code></td>
+<td align="center"><b>⚡ CLI Tools</b><br><code>128</code></td>
+<td align="center"><b>🧪 Testing & QA</b><br><code>66</code></td>
 <td align="center"><b>☁️ Free Cloud</b><br><code>72</code></td>
 <td align="center"><b>🤝 Up for Grabs</b><br><code>21</code></td>
 <td align="center"><b>🎁 Dev Perks</b><br><code>30</code></td>
-<td align="center"><b>🚀 1-Click Deploys</b><br><code>41</code></td>
+<td align="center"><b>🚀 1-Click Deploys</b><br><code>42</code></td>
 </tr>
 </table>
 
 ### 🎯 The Race to 1,000 Verified Tools (Hacktoberfest Milestone)
 
 ```text
-[███████████░░░░░░░░░] 550 / 1,000 Tools Verified (55% • 450 to go!)
+[███████████░░░░░░░░░] 566 / 1,000 Tools Verified (57% • 434 to go!)
 ```
 
 *Help us curate the definitive zero-paywall index! [Submit your favorite developer tool, API, or AI framework →](#-how-to-submit-your-project-or-api)*
@@ -66,7 +66,7 @@ DevShelf isn't a static markdown list. It runs directly inside your terminal, in
 ┌─────────────────────────────────────────────────────────────────────────────────┐
 │ $ npx devshelf search "postgres"                                                │
 │                                                                                 │
-│ 📚 DevShelf CLI v1.1.0 — 550 Curated Tools (Live CI Audited)                    │
+│ 📚 DevShelf CLI v1.1.0 — 566 Curated Tools (Live CI Audited)                    │
 │                                                                                 │
 │ [1] Neon (Database / Serverless)                                                │
 │     Serverless Postgres with autoscaling, branching, and generous free tier.    │
@@ -160,7 +160,7 @@ Stay in flow without leaving your terminal. DevShelf includes an interactive fuz
 # Launch interactive Terminal UI (fuzzy search, category browsing, and 1-click open)
 npx devshelf
 
-# Instant search across all 550+ curated resources
+# Instant search across all 560+ curated resources
 npx devshelf search "postgres"
 npx devshelf search "auth" --open
 
@@ -181,18 +181,18 @@ npx devshelf stats
 
 ## 📂 Browse Catalog by Category
 
-Explore our curated collections of **550+ zero-paywall developer tools**, categorized into dedicated guides with subcategory indexing:
+Explore our curated collections of **566+ zero-paywall developer tools**, categorized into dedicated guides with subcategory indexing:
 
 | Category | Resources | Description & Subcategories | Guide |
 | :--- | :---: | :--- | :---: |
 | 🌐 **Free & Public APIs** | **108** | Weather, Finance, Mock/Dev APIs, Geocoding, AI/ML, Media, Entertainment | [**Browse APIs →**](docs/apis.md) |
-| 🤖 **AI Agents & Local LLMs** | **90** | Local LLM Runtimes, Autonomous Agents, Coding Assistants, Orchestration | [**Browse AI Tools →**](docs/ai-tools.md) |
-| ⚡ **CLI & Productivity Tools** | **123** | Terminal Utilities, Git Power Tools, Docker & DevOps, Benchmarking, DBs | [**Browse CLI Tools →**](docs/cli-tools.md) |
-| 🧪 **Testing & QA Reliability** | **65** | E2E Testing, Mock Servers, Contract Testing, Security Auditing, Performance | [**Browse Testing Tools →**](docs/testing-qa.md) |
+| 🤖 **AI Agents & Local LLMs** | **99** | Local LLM Runtimes, Autonomous Agents, Coding Assistants, Orchestration | [**Browse AI Tools →**](docs/ai-tools.md) |
+| ⚡ **CLI & Productivity Tools** | **128** | Terminal Utilities, Git Power Tools, Docker & DevOps, Benchmarking, DBs | [**Browse CLI Tools →**](docs/cli-tools.md) |
+| 🧪 **Testing & QA Reliability** | **66** | E2E Testing, Mock Servers, Contract Testing, Security Auditing, Performance | [**Browse Testing Tools →**](docs/testing-qa.md) |
 | ☁️ **Free Cloud & Developer Tiers** | **72** | Databases, Auth & Identity, Serverless Compute, Object Storage, Email, APM | [**Browse Cloud Tiers →**](docs/free-cloud.md) |
 | 🤝 **Contributors Wanted** | **21** | Active open-source repos with curated Good First Issues and starter tasks | [**Browse Projects →**](docs/contributors-wanted.md) |
 | 🎁 **Developer Discounts & Perks** | **30** | Cloud credits, free IDE licenses, student packs, open-source sponsorships | [**Browse Perks →**](docs/perks.md) |
-| 🚀 **1-Click Deploys & Boilerplates** | **41** | Full-Stack templates, SaaS starters, BaaS, microservices deployable in 1 click | [**Browse Boilerplates →**](docs/boilerplates.md) |
+| 🚀 **1-Click Deploys & Boilerplates** | **42** | Full-Stack templates, SaaS starters, BaaS, microservices deployable in 1 click | [**Browse Boilerplates →**](docs/boilerplates.md) |
 
 ---
 
@@ -256,7 +256,7 @@ DevShelf is backed by a 100% free, CORS-enabled, static public REST API with zer
 
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
-| **[`/api/v1/tools.json`](https://devshelf.ritualdev.in/api/v1/tools.json)** | `GET` | All 550+ curated developer tools, APIs, and AI models |
+| **[`/api/v1/tools.json`](https://devshelf.ritualdev.in/api/v1/tools.json)** | `GET` | All 560+ curated developer tools, APIs, and AI models |
 | **[`/api/v1/stats.json`](https://devshelf.ritualdev.in/api/v1/stats.json)** | `GET` | Catalog telemetry, repo counts, and category breakdowns |
 | **[`/api/v1/categories.json`](https://devshelf.ritualdev.in/api/v1/categories.json)** | `GET` | Category listing and dedicated JSON endpoints |
 
@@ -266,7 +266,7 @@ DevShelf is backed by a 100% free, CORS-enabled, static public REST API with zer
 
 ## 🧩 IDE & Launcher Extensions
 
-Query and explore 550+ free developer tools directly within your workflow:
+Query and explore 560+ free developer tools directly within your workflow:
 
 - **[Raycast Extension](extensions/raycast/)** &mdash; Instant tool search & random gem picker from your desktop spotlight (`Cmd+Shift+B` to copy badges).
 - **[VS Code Extension](extensions/vscode/)** &mdash; Command Palette integration (`Ctrl+Shift+P` -> `DevShelf: Search`).

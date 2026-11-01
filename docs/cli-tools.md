@@ -4,12 +4,18 @@
 
 [← Back to Main Directory](../README.md) • [🌐 Live Search App](https://devshelf.ritualdev.in) • [➕ Submit New Resource](../README.md#-how-to-submit-your-project-or-api)
 
-[![Total CLI Tools](https://img.shields.io/badge/CLI_Tools-123_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
+[![Total CLI Tools](https://img.shields.io/badge/CLI_Tools-128_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
 
 **Jump to Subcategory:**
-[Benchmarking & Performance](#benchmarking-performance) • [CLI & Developer Productivity](#cli-developer-productivity) • [Database & SQL](#database-sql) • [Dev Utilities & Libraries](#dev-utilities-libraries) • [Developer Tools](#developer-tools) • [DevOps & Containers](#devops-containers) • [DevOps & Infrastructure](#devops-infrastructure) • [Disk & Storage](#disk-storage) • [Git & Version Control](#git-version-control) • [GitHub Workflow & TUI](#github-workflow-tui) • [HTTP & Network](#http-network) • [OS & Hardware Utilities](#os-hardware-utilities) • [System & Process Monitoring](#system-process-monitoring) • [Terminal & Search](#terminal-search) • [Terminal & Shell](#terminal-shell) • [Terminal Navigation](#terminal-navigation)
+[Automation & Browser Testing](#automation-browser-testing) • [Benchmarking & Performance](#benchmarking-performance) • [CLI & Developer Productivity](#cli-developer-productivity) • [Database & SQL](#database-sql) • [Dev Utilities & Libraries](#dev-utilities-libraries) • [Developer Toolkits & MCP](#developer-toolkits-mcp) • [Developer Tools](#developer-tools) • [DevOps & Containers](#devops-containers) • [DevOps & Infrastructure](#devops-infrastructure) • [Disk & Storage](#disk-storage) • [Git & Version Control](#git-version-control) • [GitHub Workflow & TUI](#github-workflow-tui) • [HTTP & Network](#http-network) • [OS & Hardware Utilities](#os-hardware-utilities) • [Sandboxing & Cloud Execution](#sandboxing-cloud-execution) • [System & Process Monitoring](#system-process-monitoring) • [Terminal & Search](#terminal-search) • [Terminal & Shell](#terminal-shell) • [Terminal Navigation](#terminal-navigation) • [Web Scraping & Crawling](#web-scraping-crawling)
 
 ---
+
+### <a id="automation-browser-testing"></a>Automation & Browser Testing (1)
+
+| Tool | Language | License | Description | Links |
+| :--- | :---: | :---: | :--- | :---: |
+| [**Stagehand**](https://github.com/browserbase/stagehand) | `TypeScript` | `MIT` | AI-powered web browsing automation SDK built on Playwright. Uses natural language commands (act, extract, observe) to interact with dynamic web applications without brittle XPath or CSS selector scripts. | [GitHub](https://github.com/browserbase/stagehand) |
 
 ### <a id="benchmarking-performance"></a>Benchmarking & Performance (1)
 
@@ -54,6 +60,13 @@
 | [**Codex Quota Overlay**](https://github.com/cpys/codex-quota-overlay) | `JavaScript / Electron, with C# and Swift native helpers` | `MIT` | An independent, open-source Codex Desktop companion for Windows and macOS. It displays quota limits, reset times, and reset credits, with a local Quota Center for pace and history. I am a maintainer of this independent project; it is not affiliated with or endorsed by OpenAI. | [GitHub](https://github.com/cpys/codex-quota-overlay) |
 | [**Solaris Dev Shop**](https://github.com/Shaisolaris/solaris-dev-shop) | `Python` | `MIT` | Free MIT skill library. A deterministic Python router assigns one accountable lead and, when needed, supporting specialist skills. It does not start agents, call a model, or require an account. | [GitHub](https://github.com/Shaisolaris/solaris-dev-shop) |
 | [**DateParser Kotlin**](https://github.com/Alox1d/dateparser-kotlin) | `Kotlin Multiplatform, kotlinx-datetime` | `MIT` | MIT Kotlin Multiplatform library for offline natural-language date and time parsing in Russian and English. Published Android (API 26+), JVM and iOS variants resolve supported phrases against an explicit reference time and timezone for use in task/reminder forms. | [GitHub](https://github.com/Alox1d/dateparser-kotlin) |
+
+### <a id="developer-toolkits-mcp"></a>Developer Toolkits & MCP (2)
+
+| Tool | Language | License | Description | Links |
+| :--- | :---: | :---: | :--- | :---: |
+| [**⭐ mcp-builder-kit**](https://github.com/RitualDev-Lab/mcp-builder-kit) | `TypeScript` | `Apache-2.0` | Production toolkit and scaffolding engine for Model Context Protocol (MCP) servers. Generates typed TypeScript and FastMCP Python servers, converts OpenAPI specs into tools, and includes a live testing studio. | [GitHub](https://github.com/RitualDev-Lab/mcp-builder-kit) |
+| [**FastMCP**](https://github.com/jlowin/fastmcp) | `Python` | `Apache-2.0` | High-level, idiomatic Python framework for building Model Context Protocol servers. Features fast decorator-based tool definitions, automatic Pydantic schema validation, and stdio/SSE transport support. | [GitHub](https://github.com/jlowin/fastmcp) |
 
 ### <a id="developer-tools"></a>Developer Tools (12)
 
@@ -159,6 +172,12 @@
 | [**inxi**](https://github.com/smxi/inxi) | `Perl` | `GPL-3.0` | Full featured CLI system information tool designed for troubleshooting hardware and system configurations. | [GitHub](https://github.com/smxi/inxi) |
 | [**LeanFPS**](https://github.com/Jamailar/leanfps) | `Rust` | `MIT` | Open-source Windows performance utility built in Rust and egui. Features game detection, ETW FPS recording, safe tweak undo, and crash recovery without modifying game files. | [GitHub](https://github.com/Jamailar/leanfps) |
 
+### <a id="sandboxing-cloud-execution"></a>Sandboxing & Cloud Execution (1)
+
+| Tool | Language | License | Description | Links |
+| :--- | :---: | :---: | :--- | :---: |
+| [**E2B Code Interpreter**](https://github.com/e2b-dev/E2B) | `Python / TypeScript` | `Apache-2.0` | Secure cloud sandboxing platform designed specifically for autonomous AI agents. Spawns isolated, microVM execution environments in milliseconds to run untrusted agent code, charts, and shell commands safely. | [GitHub](https://github.com/e2b-dev/E2B) |
+
 ### <a id="system-process-monitoring"></a>System & Process Monitoring (2)
 
 | Tool | Language | License | Description | Links |
@@ -213,4 +232,10 @@
 | Tool | Language | License | Description | Links |
 | :--- | :---: | :---: | :--- | :---: |
 | [**zoxide**](https://github.com/ajeetdsouza/zoxide) | `Rust` | `MIT` | Smarter cd command inspired by z and autojump: learns your navigation habits to jump to directories in fewer keystrokes. | [GitHub](https://github.com/ajeetdsouza/zoxide) |
+
+### <a id="web-scraping-crawling"></a>Web Scraping & Crawling (1)
+
+| Tool | Language | License | Description | Links |
+| :--- | :---: | :---: | :--- | :---: |
+| [**Crawlee**](https://github.com/apify/crawlee) | `TypeScript / JavaScript` | `Apache-2.0` | Scalable web scraping and browser automation library for Node.js and Python. Handles automatic proxy rotation, request queuing, headless Playwright/Puppeteer rendering, and session fingerprint evasion. | [GitHub](https://github.com/apify/crawlee) |
 

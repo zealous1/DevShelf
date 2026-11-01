@@ -1,9 +1,9 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-11-01T08:51:58.527Z",
+  "updatedAt": "2026-11-01T09:04:39.568Z",
   "slug": "testing",
   "name": "Testing & QA Automation",
-  "count": 65,
+  "count": 66,
   "items": [
     {
       "name": "AutoHeal-QA",
@@ -804,6 +804,17 @@
       "language": "Swift",
       "license": "MIT",
       "featured": false,
+      "type": "testing",
+      "section": "Testing & QA Reliability"
+    },
+    {
+      "name": "web-sec-auditor",
+      "repo": "https://github.com/RitualDev-Lab/web-sec-auditor",
+      "category": "Security & Vulnerability Auditing",
+      "description": "Unified DAST, SAST, secret hunter, and SCA vulnerability auditor for web apps and APIs. Emits OASIS SARIF v2.1.0 reports, executive HTML dashboards, and context-aware unified git diff auto-patches.",
+      "language": "TypeScript",
+      "license": "MIT",
+      "featured": true,
       "type": "testing",
       "section": "Testing & QA Reliability"
     }

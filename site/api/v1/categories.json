@@ -1,18 +1,18 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-11-01T08:51:58.527Z",
+  "updatedAt": "2026-11-01T09:04:39.568Z",
   "totalCategories": 8,
   "categories": [
     {
       "slug": "ai",
       "name": "AI Agents & Local LLMs",
-      "count": 90,
+      "count": 99,
       "endpoint": "https://devshelf.ritualdev.in/api/v1/categories/ai.json"
     },
     {
       "slug": "cli",
       "name": "CLI & Developer Productivity",
-      "count": 123,
+      "count": 128,
       "endpoint": "https://devshelf.ritualdev.in/api/v1/categories/cli.json"
     },
     {
@@ -30,7 +30,7 @@
     {
       "slug": "testing",
       "name": "Testing & QA Automation",
-      "count": 65,
+      "count": 66,
       "endpoint": "https://devshelf.ritualdev.in/api/v1/categories/testing.json"
     },
     {
@@ -42,7 +42,7 @@
     {
       "slug": "boilerplates",
       "name": "1-Click Deploy Boilerplates",
-      "count": 41,
+      "count": 42,
       "endpoint": "https://devshelf.ritualdev.in/api/v1/categories/boilerplates.json"
     },
     {

@@ -4,10 +4,10 @@
 
 [← Back to Main Directory](../README.md) • [🌐 Live Search App](https://devshelf.ritualdev.in) • [➕ Submit New Resource](../README.md#-how-to-submit-your-project-or-api)
 
-[![Total AI Tools](https://img.shields.io/badge/AI_Tools-90_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
+[![Total AI Tools](https://img.shields.io/badge/AI_Tools-99_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
 
 **Jump to Subcategory:**
-[AI Agent Security & Defense](#ai-agent-security-defense) • [AI Agents & Local LLMs](#ai-agents-local-llms) • [AI Agents & MCP Servers](#ai-agents-mcp-servers) • [AI Workflow & Orchestration](#ai-workflow-orchestration) • [Autonomous Coding & Agent Dev](#autonomous-coding-agent-dev) • [Local AI & Inference](#local-ai-inference) • [Web UI & Chat](#web-ui-chat)
+[AI Agent Security & Defense](#ai-agent-security-defense) • [AI Agents & Autonomous Coding](#ai-agents-autonomous-coding) • [AI Agents & Local LLMs](#ai-agents-local-llms) • [AI Agents & MCP Servers](#ai-agents-mcp-servers) • [AI Workflow & Orchestration](#ai-workflow-orchestration) • [Autonomous Coding & Agent Dev](#autonomous-coding-agent-dev) • [Local AI & Inference](#local-ai-inference) • [Web UI & Chat](#web-ui-chat)
 
 ---
 
@@ -16,6 +16,20 @@
 | Tool | Language | License | Description | Links |
 | :--- | :---: | :---: | :--- | :---: |
 | [**⭐ AgentShield**](https://github.com/RitualDev-Lab/AgentShield) | `TypeScript / Node.js` | `Apache-2.0` | Zero-leak secret interception, deterministic Shannon entropy tokenization, AST shell command sandbox, and CI/CD security gate for Claude Code, Cursor, and autonomous AI agents. | [GitHub](https://github.com/RitualDev-Lab/AgentShield) |
+
+### <a id="ai-agents-autonomous-coding"></a>AI Agents & Autonomous Coding (9)
+
+| Tool | Language | License | Description | Links |
+| :--- | :---: | :---: | :--- | :---: |
+| [**⭐ SkillPrism**](https://github.com/RitualDev-Lab/SkillPrism) | `TypeScript` | `Apache-2.0` | Progressive skill disclosure and context compaction engine for autonomous AI coding agents. Indexes enterprise tool schemas out-of-context and dynamically discloses only required tools to prevent prompt bloat. | [GitHub](https://github.com/RitualDev-Lab/SkillPrism) |
+| [**⭐ DBShield**](https://github.com/RitualDev-Lab/DBShield) | `TypeScript` | `MIT` | Safety-first database guardrail and transaction-rollback sandboxing MCP server for AI coding agents. Intercepts unconstrained mutations, bulk deletes, lock escalations, and masks sensitive PII in real-time. | [GitHub](https://github.com/RitualDev-Lab/DBShield) |
+| [**Pydantic AI**](https://github.com/pydantic/pydantic-ai) | `Python` | `MIT` | Production-grade generative AI agent framework built by the Pydantic team. Provides type-safe validation, structured response generation, dependency injection, and stream inspection for LLM applications. | [GitHub](https://github.com/pydantic/pydantic-ai) |
+| [**LangGraph**](https://github.com/langchain-ai/langgraph) | `Python / TypeScript` | `MIT` | Multi-agent orchestration library for building stateful, cyclic AI agent workflows with LangChain. Supports long-term human-in-the-loop memory, streaming step-by-step state recovery, and fault-tolerant graphs. | [GitHub](https://github.com/langchain-ai/langgraph) |
+| [**Browser Use**](https://github.com/browser-use/browser-use) | `Python` | `MIT` | Open-source web automation library connecting LLMs to live browser sessions. Allows autonomous agents to navigate web apps, extract deep elements, click buttons, solve captchas, and automate online workflows. | [GitHub](https://github.com/browser-use/browser-use) |
+| [**Smolagents**](https://github.com/huggingface/smolagents) | `Python` | `Apache-2.0` | Lightweight, developer-first AI agent library by Hugging Face where agents execute code actions directly in Python instead of verbose JSON tool-call steps, minimizing token overhead and execution latency. | [GitHub](https://github.com/huggingface/smolagents) |
+| [**Mastra**](https://github.com/mastra-ai/mastra) | `TypeScript` | `Apache-2.0` | Opinionated TypeScript agent framework for building, testing, and deploying production AI applications. Features typed workflows, evaluation metrics, retrieval-augmented generation (RAG), and local dev servers. | [GitHub](https://github.com/mastra-ai/mastra) |
+| [**Docling**](https://github.com/DS4SD/docling) | `Python` | `MIT` | Efficient open-source document parser that converts complex PDF, DOCX, and PPTX documents into structured Markdown and JSON with native table extraction, formula recognition, and LLM-ready chunking. | [GitHub](https://github.com/DS4SD/docling) |
+| [**MarkItDown**](https://github.com/microsoft/markitdown) | `Python` | `MIT` | Microsoft utility for converting multi-format documents (PDF, PowerPoint, Word, Excel, Images, Audio, HTML) into clean Markdown for indexing in AI agent pipelines, vector databases, and LLM contexts. | [GitHub](https://github.com/microsoft/markitdown) |
 
 ### <a id="ai-agents-local-llms"></a>AI Agents & Local LLMs (2)
 

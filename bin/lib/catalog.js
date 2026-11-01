@@ -268,36 +268,185 @@ export function getResourceUrl(item) {
 }
 
 /**
- * Filter catalog resources with complete field matching
- * Covers name, description, category, language, alternativeTo, auth, freeTier, and statusTags.
+ * Parse storage string (e.g. "500mb", "1gb", "0.5GB", "10 GB") to megabytes
+ * @param {string} str
+ * @returns {number | null}
+ */
+export function parseStorageSizeToMB(str) {
+  if (!str || typeof str !== "string") return null;
+  const match = str.trim().match(/^(\d+(?:\.\d+)?)\s*(mb|gb|tb|kb)?$/i);
+  if (!match) return null;
+  const num = parseFloat(match[1]);
+  const unit = (match[2] || "mb").toLowerCase();
+  if (unit === "tb") return num * 1024 * 1024;
+  if (unit === "gb") return num * 1024;
+  if (unit === "kb") return num / 1024;
+  return num; // mb
+}
+
+/**
+ * Extract storage mentions (MB/GB/TB) from text and return maximum MB found
+ * @param {string} text
+ * @returns {number}
+ */
+export function extractMaxStorageMB(text) {
+  if (!text || typeof text !== "string") return 0;
+  const regex = /(\d+(?:\.\d+)?)\s*(gb|mb|tb)\b/gi;
+  let maxMB = 0;
+  let match;
+  while ((match = regex.exec(text)) !== null) {
+    const val = parseFloat(match[1]);
+    const unit = match[2].toLowerCase();
+    let mb = val;
+    if (unit === "gb") mb = val * 1024;
+    else if (unit === "tb") mb = val * 1024 * 1024;
+    if (mb > maxMB) maxMB = mb;
+  }
+  return maxMB;
+}
+
+/**
+ * Check if a query matches a string via fuzzy character subsequence
+ * @param {string} text
+ * @param {string} query
+ * @returns {boolean}
+ */
+export function isFuzzySubsequence(text, query) {
+  if (!text || !query) return false;
+  let tIdx = 0;
+  let qIdx = 0;
+  while (tIdx < text.length && qIdx < query.length) {
+    if (text[tIdx] === query[qIdx]) {
+      qIdx++;
+    }
+    tIdx++;
+  }
+  return qIdx === query.length;
+}
+
+/**
+ * Filter and rank catalog resources with fuzzy scoring, semantic tag filtering,
+ * and free-tier threshold queries.
  *
  * @param {Array<any>} resources
  * @param {string} query
+ * @param {object} [options={}]
+ * @param {string|string[]} [options.tags]
+ * @param {string} [options.freeTierStorage]
+ * @param {string} [options.category]
  * @returns {Array<any>}
  */
-export function searchCatalog(resources, query) {
-  if (!Array.isArray(resources) || !query) return [];
-  const q = String(query).toLowerCase().trim();
-  if (!q) return [];
+export function searchCatalog(resources, query, options = {}) {
+  if (!Array.isArray(resources)) return [];
+  const q = String(query || "")
+    .toLowerCase()
+    .trim();
 
-  return resources.filter((item) => {
-    const searchTarget = [
-      item.name,
-      item.description,
-      item.category,
-      item.section,
-      item.type,
-      item.language,
-      item.alternativeTo,
-      item.auth,
-      item.freeTier,
-      item.license,
-      ...(Array.isArray(item.statusTags) ? item.statusTags : []),
-    ]
-      .filter(Boolean)
-      .join(" ")
-      .toLowerCase();
+  // Parse tag filter
+  const requiredTags = (
+    Array.isArray(options.tags) ? options.tags : options.tags ? [options.tags] : []
+  )
+    .map((t) => String(t).toLowerCase().trim())
+    .filter(Boolean);
 
-    return searchTarget.includes(q);
+  // Parse storage filter
+  const requiredStorageMB = options.freeTierStorage
+    ? parseStorageSizeToMB(options.freeTierStorage)
+    : null;
+
+  // Parse category filter
+  const requiredCategory = options.category ? String(options.category).toLowerCase().trim() : null;
+
+  const scored = [];
+
+  for (const item of resources) {
+    const nameLower = (item.name || "").toLowerCase();
+    const descLower = (item.description || "").toLowerCase();
+    const catLower = (item.category || "").toLowerCase();
+    const typeLower = (item.type || "").toLowerCase();
+    const sectionLower = (item.section || "").toLowerCase();
+    const altLower = (item.alternativeTo || "").toLowerCase();
+    const freeTierLower = (item.freeTier || "").toLowerCase();
+    const rateLimitLower = (item.rateLimit || "").toLowerCase();
+    const authLower = (item.auth || "").toLowerCase();
+    const itemTags = (Array.isArray(item.statusTags) ? item.statusTags : []).map((t) =>
+      String(t).toLowerCase(),
+    );
+
+    // 1. Tag Filtering
+    if (requiredTags.length > 0) {
+      const allItemTagStrings = [...itemTags, catLower, typeLower, sectionLower, authLower].join(
+        " ",
+      );
+      const hasAllTags = requiredTags.every((t) => allItemTagStrings.includes(t));
+      if (!hasAllTags) continue;
+    }
+
+    // 2. Category Filtering
+    if (requiredCategory) {
+      const catTarget = `${catLower} ${typeLower} ${sectionLower}`;
+      if (!catTarget.includes(requiredCategory)) continue;
+    }
+
+    // 3. Free-tier storage threshold filter
+    if (requiredStorageMB !== null) {
+      const textToSearch = `${freeTierLower} ${descLower} ${rateLimitLower}`;
+      const itemStorageMB = extractMaxStorageMB(textToSearch);
+      if (itemStorageMB < requiredStorageMB) continue;
+    }
+
+    // 4. Scoring and relevance
+    if (!q) {
+      // If no text query, any item passing filters matches
+      scored.push({ item, score: 1 });
+      continue;
+    }
+
+    let score = 0;
+
+    // Exact matches
+    if (nameLower === q) score += 120;
+    else if (nameLower.startsWith(q)) score += 80;
+    else if (nameLower.split(/\s+/).some((w) => w.startsWith(q))) score += 60;
+    else if (nameLower.includes(q)) score += 45;
+
+    // Alternative & Category matches
+    if (altLower.includes(q)) score += 35;
+    if (catLower.includes(q) || typeLower.includes(q)) score += 30;
+
+    // Status Tags & Auth
+    if (itemTags.some((t) => t.includes(q))) score += 25;
+    if (authLower.includes(q)) score += 20;
+
+    // Description text match
+    if (descLower.includes(q)) score += 20;
+    if (freeTierLower.includes(q) || rateLimitLower.includes(q)) score += 15;
+
+    // Fuzzy subsequence match in name if not already matched
+    if (score === 0 && isFuzzySubsequence(nameLower, q)) {
+      score += 10;
+    }
+
+    // Partial word tokens overlap
+    if (score === 0) {
+      const queryTokens = q.split(/\s+/).filter((t) => t.length > 1);
+      const combined = `${nameLower} ${descLower} ${catLower} ${altLower}`;
+      const matchedTokens = queryTokens.filter((token) => combined.includes(token));
+      if (matchedTokens.length > 0) {
+        score += 10 * matchedTokens.length;
+      }
+    }
+
+    if (score > 0) {
+      scored.push({ item, score });
+    }
+  }
+
+  // Sort descending by score, then alphabetically
+  scored.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    return (a.item.name || "").localeCompare(b.item.name || "");
   });
+
+  return scored.map((s) => s.item);
 }

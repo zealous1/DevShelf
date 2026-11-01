@@ -91,6 +91,27 @@ const PAYWALL_REDIRECT_SIGNATURES = [
   /\/paywall\b/i,
 ];
 
+const GITHUB_TOKEN =
+  process.env.GITHUB_TOKEN || process.env.GH_TOKEN || process.env.GITHUB_PAT || "";
+const gitHubCache = new Map<string, Awaited<ReturnType<typeof singlePing>>>();
+
+function extractGitHubOwnerRepo(urlStr: string): { owner: string; repo: string } | null {
+  try {
+    const parsed = new URL(urlStr);
+    if (parsed.hostname.toLowerCase() !== "github.com") return null;
+    const parts = parsed.pathname.split("/").filter(Boolean);
+    if (
+      parts.length >= 2 &&
+      !["topics", "search", "trending", "features", "pricing", "marketplace"].includes(parts[0])
+    ) {
+      return { owner: parts[0], repo: parts[1] };
+    }
+  } catch {
+    // ignore
+  }
+  return null;
+}
+
 async function singlePing(urlStr: string): Promise<{
   ok: boolean;
   status: number | string;
@@ -107,6 +128,67 @@ async function singlePing(urlStr: string): Promise<{
     | "timeout_or_dns"
     | "http_error";
 }> {
+  const ghRepo = extractGitHubOwnerRepo(urlStr);
+  if (ghRepo) {
+    const cacheKey = `${ghRepo.owner}/${ghRepo.repo}`.toLowerCase();
+    if (gitHubCache.has(cacheKey)) {
+      return gitHubCache.get(cacheKey)!;
+    }
+
+    if (GITHUB_TOKEN) {
+      const start = Date.now();
+      try {
+        const ghRes = await fetch(`https://api.github.com/repos/${ghRepo.owner}/${ghRepo.repo}`, {
+          headers: {
+            Authorization: `Bearer ${GITHUB_TOKEN}`,
+            "User-Agent": "DevShelf-Healthcheck/2.1",
+            Accept: "application/vnd.github+json",
+          },
+        });
+        const latencyMs = Date.now() - start;
+        if (ghRes.ok) {
+          const result = {
+            ok: true,
+            status: ghRes.status,
+            latencyMs,
+            contentType: "application/json",
+          };
+          gitHubCache.set(cacheKey, result);
+          return result;
+        }
+
+        const remaining = ghRes.headers.get("x-ratelimit-remaining");
+        if (ghRes.status === 403 || ghRes.status === 429 || remaining === "0") {
+          const result = {
+            ok: true,
+            status: ghRes.status,
+            healthStatus: "bot_challenge" as HealthStatus,
+            error: "GitHub rate limit reached (origin active)",
+            latencyMs,
+            contentType: "application/json",
+          };
+          gitHubCache.set(cacheKey, result);
+          return result;
+        }
+
+        if (ghRes.status === 404) {
+          const result = {
+            ok: false,
+            status: 404,
+            error: "GitHub repository not found or private",
+            latencyMs,
+            rotType: "soft_404" as const,
+            contentType: "application/json",
+          };
+          gitHubCache.set(cacheKey, result);
+          return result;
+        }
+      } catch {
+        // Fall back to standard ping on API network failure
+      }
+    }
+  }
+
   const start = Date.now();
   try {
     const controller = new AbortController();
@@ -272,32 +354,57 @@ async function singlePing(urlStr: string): Promise<{
 }
 
 /**
- * Pings URL with automated single retry policy on transient failure or 5xx error
+ * Pings URL with automated exponential backoff and jitter on transient failures
  */
 export async function pingUrlWithRetry(
   urlStr: string,
+  maxRetries = 2,
 ): Promise<Awaited<ReturnType<typeof singlePing>>> {
-  const firstAttempt = await singlePing(urlStr);
-  if (firstAttempt.ok) {
-    return firstAttempt;
-  }
-
-  // If transient network or server error, wait 1000ms and retry once
-  const isTransient =
-    firstAttempt.status === "TIMEOUT" ||
-    firstAttempt.status === "DNS_OR_NETWORK" ||
-    (typeof firstAttempt.status === "number" && firstAttempt.status >= 500);
-
-  if (isTransient) {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    const secondAttempt = await singlePing(urlStr);
-    if (secondAttempt.ok) {
-      return secondAttempt;
+  let attempt = 0;
+  while (true) {
+    const res = await singlePing(urlStr);
+    if (res.ok || attempt >= maxRetries) {
+      return res;
     }
-    return secondAttempt;
+
+    const isTransient =
+      res.status === "TIMEOUT" ||
+      res.status === "DNS_OR_NETWORK" ||
+      (typeof res.status === "number" && res.status >= 500);
+
+    if (!isTransient) {
+      return res;
+    }
+
+    attempt++;
+    const jitter = Math.random() * 300;
+    const backoffMs = Math.min(3500, Math.pow(2, attempt) * 500 + jitter);
+    await new Promise((resolve) => setTimeout(resolve, backoffMs));
+  }
+}
+
+/**
+ * Concurrency worker pool that continuously processes items without stalling on batch chunks
+ */
+async function runConcurrentWorkerPool<T, R>(
+  items: T[],
+  concurrency: number,
+  taskFn: (item: T, index: number) => Promise<R>,
+): Promise<R[]> {
+  const results: R[] = new Array(items.length);
+  let nextIdx = 0;
+
+  async function worker() {
+    while (nextIdx < items.length) {
+      const idx = nextIdx++;
+      results[idx] = await taskFn(items[idx], idx);
+    }
   }
 
-  return firstAttempt;
+  const poolSize = Math.max(1, Math.min(concurrency, items.length));
+  const workers = Array.from({ length: poolSize }, () => worker());
+  await Promise.all(workers);
+  return results;
 }
 
 export async function checkDeadLinks() {
@@ -340,11 +447,12 @@ export async function checkDeadLinks() {
     `🔍 [DevShelf Healthcheck] Auditing ${itemsToCheck.length} endpoints with intelligent link rottenness detection, retries, and redirect tracking...\n`,
   );
 
-  // Run in concurrent chunks of 5
-  const concurrency = 5;
-  for (let i = 0; i < itemsToCheck.length; i += concurrency) {
-    const batch = itemsToCheck.slice(i, i + concurrency);
-    const batchPromises = batch.map(async ({ file, item, url }) => {
+  // Run via continuous concurrent worker pool (default concurrency: 8)
+  const concurrency = 8;
+  const poolResults = await runConcurrentWorkerPool(
+    itemsToCheck,
+    concurrency,
+    async ({ file, item, url }) => {
       const ping = await pingUrlWithRetry(url);
       const prior = priorHistory.get(item.name.toLowerCase());
 
@@ -414,11 +522,10 @@ export async function checkDeadLinks() {
         );
       }
       return result;
-    });
+    },
+  );
 
-    const batchResults = await Promise.all(batchPromises);
-    results.push(...batchResults);
-  }
+  results.push(...poolResults);
 
   const deadLinks = results.filter((r) => !r.ok);
   const botProtected = results.filter((r) => r.healthStatus === "bot_challenge");

@@ -161,31 +161,35 @@ function printHelp() {
   printHeader();
   console.log(`
 ${c.bold}USAGE:${c.reset}
-  ${c.green}npx devshelf${c.reset}                     Launch interactive Terminal User Interface (TUI)
-  ${c.green}npx devshelf daily [--quiet]${c.reset}     Print today's curated open-source discovery
-  ${c.green}npx devshelf search <query>${c.reset}      Search tools, APIs, and AI agents
-  ${c.green}npx devshelf contribute [query]${c.reset}  Find repos actively seeking help & starter tasks
-  ${c.green}npx devshelf list [category]${c.reset}     List items by category
-  ${c.green}npx devshelf random${c.reset}              Discover a random curated resource
-  ${c.green}npx devshelf stats${c.reset}               Show catalog counts and metrics
-  ${c.green}npx devshelf update${c.reset}              Refresh catalog cache from live directory
-  ${c.green}npx devshelf sponsors${c.reset}            Display Wall of Patrons & verified backer ledger
-  ${c.green}npx devshelf newsletter${c.reset}          Read latest DevShelf Weekly issue & zero-paywall tools
-  ${c.green}npx devshelf submit [options]${c.reset}     Submit a new free developer tool via PR from terminal
-  ${c.green}npx devshelf mcp${c.reset}                 Launch DevShelf as a Model Context Protocol (MCP) server
-  ${c.green}npx devshelf open <name>${c.reset}          Open resource URL directly in browser
+  ${c.green}npx devshelf${c.reset}                                 Launch interactive Terminal User Interface (TUI)
+  ${c.green}npx devshelf daily [--quiet]${c.reset}                 Print today's curated open-source discovery
+  ${c.green}npx devshelf search <query> [options]${c.reset}        Fuzzy search tools, APIs, and AI agents
+  ${c.green}npx devshelf contribute [query]${c.reset}              Find repos actively seeking help & starter tasks
+  ${c.green}npx devshelf list [category]${c.reset}                 List items by category
+  ${c.green}npx devshelf random${c.reset}                          Discover a random curated resource
+  ${c.green}npx devshelf stats${c.reset}                           Show catalog counts and metrics
+  ${c.green}npx devshelf update${c.reset}                          Refresh catalog cache from live directory
+  ${c.green}npx devshelf sponsors${c.reset}                        Display Wall of Patrons & verified backer ledger
+  ${c.green}npx devshelf newsletter${c.reset}                      Read latest DevShelf Weekly issue & zero-paywall tools
+  ${c.green}npx devshelf submit [options]${c.reset}                 Submit a new free developer tool via PR from terminal
+  ${c.green}npx devshelf mcp${c.reset}                             Launch DevShelf as a Model Context Protocol (MCP) server
+  ${c.green}npx devshelf open <name>${c.reset}                      Open resource URL directly in browser
 
 ${c.bold}OPTIONS:${c.reset}
-  ${c.cyan}-q, --quiet${c.reset}                      Ultra-compact output for .zshrc / .bashrc execution
-  ${c.cyan}--json${c.reset}                           Output raw JSON results for piping
-  ${c.cyan}--open${c.reset}                           Open first result in browser
-  ${c.cyan}-h, --help${c.reset}                       Show this help message
-  ${c.cyan}-v, --version${c.reset}                    Show version
+  ${c.cyan}-t, --tag <tag>${c.reset}                            Filter by semantic tag (e.g. "No Card Required", "mcp")
+  ${c.cyan}--free-tier-storage, --storage <size>${c.reset}     Filter by free-tier storage threshold (e.g. "500mb", "1gb")
+  ${c.cyan}-c, --category <cat>${c.reset}                       Filter by category (e.g. "ai", "apis", "database")
+  ${c.cyan}-q, --quiet${c.reset}                                  Ultra-compact output for .zshrc / .bashrc execution
+  ${c.cyan}--json${c.reset}                                       Output raw JSON results for piping
+  ${c.cyan}--open${c.reset}                                       Open first result in browser
+  ${c.cyan}-h, --help${c.reset}                                   Show this help message
+  ${c.cyan}-v, --version${c.reset}                                Show version
 
 ${c.bold}EXAMPLES:${c.reset}
-  ${c.gray}$${c.reset} npx devshelf daily --quiet
+  ${c.gray}$${c.reset} npx devshelf search "postgres" --free-tier-storage 500mb
+  ${c.gray}$${c.reset} npx devshelf search "agent" --tag "mcp"
   ${c.gray}$${c.reset} npx devshelf search "postman"
-  ${c.gray}$${c.reset} npx devshelf search "postgres"
+  ${c.gray}$${c.reset} npx devshelf daily --quiet
   ${c.gray}$${c.reset} npx devshelf contribute "rust"
   ${c.gray}$${c.reset} npx devshelf list "ai"
   ${c.gray}$${c.reset} npx devshelf random
@@ -207,8 +211,8 @@ function getDailyItem(resources) {
   return { date: dateStr, item: resources[index] };
 }
 
-function searchItems(resources, query) {
-  return searchCatalog(resources, query);
+function searchItems(resources, query, options = {}) {
+  return searchCatalog(resources, query, options);
 }
 
 function printItemCard(item, index) {
@@ -489,7 +493,40 @@ async function main() {
   const isJson = args.includes("--json");
   const shouldOpen = args.includes("--open");
 
-  const cleanArgs = args.filter((a) => !a.startsWith("-"));
+  function getOption(flag, alias) {
+    for (let i = 0; i < args.length; i++) {
+      if (args[i] === flag || (alias && args[i] === alias)) {
+        return args[i + 1] && !args[i + 1].startsWith("-") ? args[i + 1] : "";
+      }
+      if (args[i].startsWith(`${flag}=`)) {
+        return args[i].slice(flag.length + 1);
+      }
+      if (alias && args[i].startsWith(`${alias}=`)) {
+        return args[i].slice(alias.length + 1);
+      }
+    }
+    return null;
+  }
+
+  const tagFilter = getOption("--tag", "-t");
+  const storageFilter = getOption("--free-tier-storage", "--storage");
+  const categoryFilter = getOption("--category", "-c");
+
+  const cleanArgs = [];
+  for (let i = 0; i < args.length; i++) {
+    const a = args[i];
+    if (a.startsWith("-")) {
+      if (
+        ["-t", "--tag", "--free-tier-storage", "--storage", "-c", "--category"].includes(a) &&
+        i + 1 < args.length &&
+        !args[i + 1].startsWith("-")
+      ) {
+        i++;
+      }
+      continue;
+    }
+    cleanArgs.push(a);
+  }
   const command = cleanArgs[0];
 
   if (command === "update" || command === "refresh") {
@@ -597,14 +634,20 @@ async function main() {
 
   if (command === "search" || command === "find") {
     const query = cleanArgs.slice(1).join(" ");
-    if (!query) {
+    if (!query && !tagFilter && !storageFilter && !categoryFilter) {
       console.error(
-        `${c.red}Error:${c.reset} Please specify a search term. Example: devshelf search postgres`,
+        `${c.red}Error:${c.reset} Please specify a search term or filter. Example: devshelf search postgres --free-tier-storage 500mb`,
       );
       process.exit(1);
     }
 
-    const matches = searchItems(resources, query);
+    const searchOptions = {
+      tags: tagFilter || undefined,
+      freeTierStorage: storageFilter || undefined,
+      category: categoryFilter || undefined,
+    };
+
+    const matches = searchItems(resources, query, searchOptions);
 
     if (isJson) {
       console.log(JSON.stringify(matches, null, 2));
@@ -612,8 +655,14 @@ async function main() {
     }
 
     printHeader();
+    const filterClauses = [];
+    if (tagFilter) filterClauses.push(`tag: "${tagFilter}"`);
+    if (storageFilter) filterClauses.push(`storage >= ${storageFilter}`);
+    if (categoryFilter) filterClauses.push(`category: "${categoryFilter}"`);
+    const filterSummary = filterClauses.length > 0 ? ` [${filterClauses.join(", ")}]` : "";
+
     console.log(
-      `  🔍 Search Results for "${c.bold}${query}${c.reset}" (${matches.length} found):\n`,
+      `  🔍 Search Results for "${c.bold}${query || "*"}${c.reset}"${filterSummary} (${matches.length} found):\n`,
     );
 
     matches.slice(0, 20).forEach((item, idx) => printItemCard(item, idx));

@@ -1,9 +1,9 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-11-01T08:51:58.527Z",
+  "updatedAt": "2026-11-01T09:04:39.568Z",
   "slug": "cli",
   "name": "CLI & Developer Productivity",
-  "count": 123,
+  "count": 128,
   "items": [
     {
       "name": "GitWhisper",
@@ -1911,6 +1911,61 @@
       "description": "I built Kilobat CLI for macOS network monitoring and diagnostics, with an interactive terminal interface, JSON output and a local MCP server for agents. The GPL-licensed CLI is a separate project from the proprietary desktop app.",
       "language": "Swift",
       "license": "GPL-3.0-only",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "mcp-builder-kit",
+      "repo": "https://github.com/RitualDev-Lab/mcp-builder-kit",
+      "category": "Developer Toolkits & MCP",
+      "description": "Production toolkit and scaffolding engine for Model Context Protocol (MCP) servers. Generates typed TypeScript and FastMCP Python servers, converts OpenAPI specs into tools, and includes a live testing studio.",
+      "language": "TypeScript",
+      "license": "Apache-2.0",
+      "featured": true,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "FastMCP",
+      "repo": "https://github.com/jlowin/fastmcp",
+      "category": "Developer Toolkits & MCP",
+      "description": "High-level, idiomatic Python framework for building Model Context Protocol servers. Features fast decorator-based tool definitions, automatic Pydantic schema validation, and stdio/SSE transport support.",
+      "language": "Python",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "Stagehand",
+      "repo": "https://github.com/browserbase/stagehand",
+      "category": "Automation & Browser Testing",
+      "description": "AI-powered web browsing automation SDK built on Playwright. Uses natural language commands (act, extract, observe) to interact with dynamic web applications without brittle XPath or CSS selector scripts.",
+      "language": "TypeScript",
+      "license": "MIT",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "Crawlee",
+      "repo": "https://github.com/apify/crawlee",
+      "category": "Web Scraping & Crawling",
+      "description": "Scalable web scraping and browser automation library for Node.js and Python. Handles automatic proxy rotation, request queuing, headless Playwright/Puppeteer rendering, and session fingerprint evasion.",
+      "language": "TypeScript / JavaScript",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "E2B Code Interpreter",
+      "repo": "https://github.com/e2b-dev/E2B",
+      "category": "Sandboxing & Cloud Execution",
+      "description": "Secure cloud sandboxing platform designed specifically for autonomous AI agents. Spawns isolated, microVM execution environments in milliseconds to run untrusted agent code, charts, and shell commands safely.",
+      "language": "Python / TypeScript",
+      "license": "Apache-2.0",
       "featured": false,
       "type": "cli",
       "section": "CLI & Productivity Tools"

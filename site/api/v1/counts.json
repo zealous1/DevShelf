@@ -1,17 +1,17 @@
 {
-  "totalCount": 550,
-  "milestone": "550+",
-  "exactCount": 550,
+  "totalCount": 566,
+  "milestone": "560+",
+  "exactCount": 566,
   "shelfCounts": {
-    "ai-tools.json": 90,
+    "ai-tools.json": 99,
     "apis.json": 108,
-    "boilerplates.json": 41,
-    "cli-tools.json": 123,
+    "boilerplates.json": 42,
+    "cli-tools.json": 128,
     "contributors-wanted.json": 21,
     "free-cloud.json": 72,
     "perks.json": 30,
-    "testing-qa.json": 65
+    "testing-qa.json": 66
   },
-  "reposCount": 340,
-  "updatedAt": "2026-11-01T08:52:02.608Z"
+  "reposCount": 356,
+  "updatedAt": "2026-11-01T09:04:46.443Z"
 }

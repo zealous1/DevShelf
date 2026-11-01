@@ -490,5 +490,17 @@
     "deployUrl": "https://astro.build",
     "freeTierCost": "100% Free Open Source",
     "statusTags": ["No Card Required", "CI Verified"]
+  },
+  {
+    "name": "Reflex Full-Stack Starter",
+    "repo": "https://github.com/reflex-dev/reflex",
+    "category": "Full-Stack Web Starter",
+    "platform": "Self-Hosted / Cloud",
+    "deployUrl": "https://reflex.dev",
+    "freeTierCost": "100% Free Open Source",
+    "description": "Pure Python full-stack reactive web application starter. Builds interactive UIs with FastAPI backend and React frontend with zero JavaScript required.",
+    "language": "Python",
+    "license": "Apache-2.0",
+    "statusTags": ["No Card Required", "CI Verified"]
   }
 ]

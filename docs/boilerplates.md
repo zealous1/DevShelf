@@ -4,7 +4,7 @@
 
 [← Back to Main Directory](../README.md) • [🌐 Live Search App](https://devshelf.ritualdev.in) • [➕ Submit New Resource](../README.md#-how-to-submit-your-project-or-api)
 
-[![Total Boilerplates](https://img.shields.io/badge/Boilerplates-41_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
+[![Total Boilerplates](https://img.shields.io/badge/Boilerplates-42_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
 
 **Jump to Subcategory:**
 [AI & Full-Stack Starters](#ai-full-stack-starters) • [BaaS & Databases](#baas-databases) • [Backend & Microservices](#backend-microservices) • [Full-Stack Web Starter](#full-stack-web-starter) • [Mobile & Cross-Platform](#mobile-cross-platform) • [SaaS & Dashboard Starters](#saas-dashboard-starters) • [Static Site & Documentation](#static-site-documentation)
@@ -43,7 +43,7 @@
 | [**Elysia Starter**](https://github.com/elysiajs/elysia) | **Elysia / Bun** | [🚀 **Deploy**](https://elysiajs.com) | `100% Free Open Source` | Ergonomic TypeScript web framework for Bun with end-to-end type safety and TypeBox validation. |
 | [**Fastify Starter**](https://github.com/fastify/fastify) | **Fastify / Node.js** | [🚀 **Deploy**](https://fastify.dev) | `100% Free Open Source` | Fast and low overhead web framework for Node.js with built-in schema-based JSON serialization. |
 
-### <a id="full-stack-web-starter"></a>Full-Stack Web Starter (13)
+### <a id="full-stack-web-starter"></a>Full-Stack Web Starter (14)
 
 | Template & Repository | Platform | 1-Click Deploy | Free Tier Cost | Description |
 | :--- | :---: | :---: | :---: | :--- |
@@ -60,6 +60,7 @@
 | [**Vitesse**](https://github.com/antfu/vitesse) | **Vite / Vue 3** | [🚀 **Deploy**](https://vitesse.netlify.app) | `100% Free Open Source` | Opinionated Vite starter template with file-based routing, auto-imported components, UnoCSS, and dark mode. |
 | [**Vitesse WebExt**](https://github.com/antfu/vitesse-webext) | **Browser Extension / Vite** | [🚀 **Deploy**](https://github.com/antfu/vitesse-webext) | `100% Free Open Source` | Cross-browser web extension starter template powered by Vite with Manifest V3 and Vue components. |
 | [**AdonisJS Starter**](https://github.com/adonisjs/core) | **AdonisJS / Node.js** | [🚀 **Deploy**](https://adonisjs.com) | `100% Free Open Source` | Fully featured Node.js web framework with built-in ORM, auth, routing, and template engine, Laravel-like feel. |
+| [**Reflex Full-Stack Starter**](https://github.com/reflex-dev/reflex) | **Self-Hosted / Cloud** | [🚀 **Deploy**](https://reflex.dev) | `100% Free Open Source` | Pure Python full-stack reactive web application starter. Builds interactive UIs with FastAPI backend and React frontend with zero JavaScript required. |
 
 ### <a id="mobile-cross-platform"></a>Mobile & Cross-Platform (4)
 

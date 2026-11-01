@@ -2,8 +2,8 @@
   "version": "1.1.2",
   "docs": "https://devshelf.ritualdev.in/docs/api.html",
   "license": "https://github.com/RitualDev-Lab/DevShelf/blob/main/LICENSE",
-  "updatedAt": "2026-11-01T08:51:58.527Z",
-  "totalCount": 550,
+  "updatedAt": "2026-11-01T09:04:39.568Z",
+  "totalCount": 566,
   "tools": [
     {
       "name": "AgentShield",
@@ -1485,6 +1485,105 @@
       "category": "AI Agents & Local LLMs",
       "description": "Open-source project workspace for teams and AI agents, with task delegation, persistent sandbox workspaces, and deliverable review. Self-hosting uses separately configured model-provider credentials.",
       "language": "TypeScript / Bun",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "SkillPrism",
+      "repo": "https://github.com/RitualDev-Lab/SkillPrism",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Progressive skill disclosure and context compaction engine for autonomous AI coding agents. Indexes enterprise tool schemas out-of-context and dynamically discloses only required tools to prevent prompt bloat.",
+      "language": "TypeScript",
+      "license": "Apache-2.0",
+      "featured": true,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "DBShield",
+      "repo": "https://github.com/RitualDev-Lab/DBShield",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Safety-first database guardrail and transaction-rollback sandboxing MCP server for AI coding agents. Intercepts unconstrained mutations, bulk deletes, lock escalations, and masks sensitive PII in real-time.",
+      "language": "TypeScript",
+      "license": "MIT",
+      "featured": true,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Pydantic AI",
+      "repo": "https://github.com/pydantic/pydantic-ai",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Production-grade generative AI agent framework built by the Pydantic team. Provides type-safe validation, structured response generation, dependency injection, and stream inspection for LLM applications.",
+      "language": "Python",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "LangGraph",
+      "repo": "https://github.com/langchain-ai/langgraph",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Multi-agent orchestration library for building stateful, cyclic AI agent workflows with LangChain. Supports long-term human-in-the-loop memory, streaming step-by-step state recovery, and fault-tolerant graphs.",
+      "language": "Python / TypeScript",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Browser Use",
+      "repo": "https://github.com/browser-use/browser-use",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Open-source web automation library connecting LLMs to live browser sessions. Allows autonomous agents to navigate web apps, extract deep elements, click buttons, solve captchas, and automate online workflows.",
+      "language": "Python",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Smolagents",
+      "repo": "https://github.com/huggingface/smolagents",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Lightweight, developer-first AI agent library by Hugging Face where agents execute code actions directly in Python instead of verbose JSON tool-call steps, minimizing token overhead and execution latency.",
+      "language": "Python",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Mastra",
+      "repo": "https://github.com/mastra-ai/mastra",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Opinionated TypeScript agent framework for building, testing, and deploying production AI applications. Features typed workflows, evaluation metrics, retrieval-augmented generation (RAG), and local dev servers.",
+      "language": "TypeScript",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "Docling",
+      "repo": "https://github.com/DS4SD/docling",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Efficient open-source document parser that converts complex PDF, DOCX, and PPTX documents into structured Markdown and JSON with native table extraction, formula recognition, and LLM-ready chunking.",
+      "language": "Python",
+      "license": "MIT",
+      "featured": false,
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
+    {
+      "name": "MarkItDown",
+      "repo": "https://github.com/microsoft/markitdown",
+      "category": "AI Agents & Autonomous Coding",
+      "description": "Microsoft utility for converting multi-format documents (PDF, PowerPoint, Word, Excel, Images, Audio, HTML) into clean Markdown for indexing in AI agent pipelines, vector databases, and LLM contexts.",
+      "language": "Python",
       "license": "MIT",
       "featured": false,
       "type": "ai",
@@ -3401,6 +3500,61 @@
       "section": "CLI & Productivity Tools"
     },
     {
+      "name": "mcp-builder-kit",
+      "repo": "https://github.com/RitualDev-Lab/mcp-builder-kit",
+      "category": "Developer Toolkits & MCP",
+      "description": "Production toolkit and scaffolding engine for Model Context Protocol (MCP) servers. Generates typed TypeScript and FastMCP Python servers, converts OpenAPI specs into tools, and includes a live testing studio.",
+      "language": "TypeScript",
+      "license": "Apache-2.0",
+      "featured": true,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "FastMCP",
+      "repo": "https://github.com/jlowin/fastmcp",
+      "category": "Developer Toolkits & MCP",
+      "description": "High-level, idiomatic Python framework for building Model Context Protocol servers. Features fast decorator-based tool definitions, automatic Pydantic schema validation, and stdio/SSE transport support.",
+      "language": "Python",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "Stagehand",
+      "repo": "https://github.com/browserbase/stagehand",
+      "category": "Automation & Browser Testing",
+      "description": "AI-powered web browsing automation SDK built on Playwright. Uses natural language commands (act, extract, observe) to interact with dynamic web applications without brittle XPath or CSS selector scripts.",
+      "language": "TypeScript",
+      "license": "MIT",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "Crawlee",
+      "repo": "https://github.com/apify/crawlee",
+      "category": "Web Scraping & Crawling",
+      "description": "Scalable web scraping and browser automation library for Node.js and Python. Handles automatic proxy rotation, request queuing, headless Playwright/Puppeteer rendering, and session fingerprint evasion.",
+      "language": "TypeScript / JavaScript",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "E2B Code Interpreter",
+      "repo": "https://github.com/e2b-dev/E2B",
+      "category": "Sandboxing & Cloud Execution",
+      "description": "Secure cloud sandboxing platform designed specifically for autonomous AI agents. Spawns isolated, microVM execution environments in milliseconds to run untrusted agent code, charts, and shell commands safely.",
+      "language": "Python / TypeScript",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
       "name": "AutoHeal-QA",
       "repo": "https://github.com/RitualDev-Lab/autoheal-qa",
       "category": "Browser & E2E Testing",
@@ -4199,6 +4353,17 @@
       "language": "Swift",
       "license": "MIT",
       "featured": false,
+      "type": "testing",
+      "section": "Testing & QA Reliability"
+    },
+    {
+      "name": "web-sec-auditor",
+      "repo": "https://github.com/RitualDev-Lab/web-sec-auditor",
+      "category": "Security & Vulnerability Auditing",
+      "description": "Unified DAST, SAST, secret hunter, and SCA vulnerability auditor for web apps and APIs. Emits OASIS SARIF v2.1.0 reports, executive HTML dashboards, and context-aware unified git diff auto-patches.",
+      "language": "TypeScript",
+      "license": "MIT",
+      "featured": true,
       "type": "testing",
       "section": "Testing & QA Reliability"
     },
@@ -7894,6 +8059,23 @@
       "platform": "Astro / Web",
       "deployUrl": "https://astro.build",
       "freeTierCost": "100% Free Open Source",
+      "statusTags": [
+        "No Card Required",
+        "CI Verified"
+      ],
+      "type": "boilerplate",
+      "section": "One-Click Deployment Boilerplates"
+    },
+    {
+      "name": "Reflex Full-Stack Starter",
+      "repo": "https://github.com/reflex-dev/reflex",
+      "category": "Full-Stack Web Starter",
+      "platform": "Self-Hosted / Cloud",
+      "deployUrl": "https://reflex.dev",
+      "freeTierCost": "100% Free Open Source",
+      "description": "Pure Python full-stack reactive web application starter. Builds interactive UIs with FastAPI backend and React frontend with zero JavaScript required.",
+      "language": "Python",
+      "license": "Apache-2.0",
       "statusTags": [
         "No Card Required",
         "CI Verified"
