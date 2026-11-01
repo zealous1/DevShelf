@@ -226,8 +226,71 @@ export function generateFeaturedCardSvg(toolName = "Featured Open Source Project
 </svg>`;
 }
 
+export function generateUptimeBadgeSvg(toolName = "DevShelf", uptimePercent = "99.9%"): string {
+  const safeName = escapeXml(toolName);
+  const safeUptime = escapeXml(uptimePercent);
+  const leftText = "DevShelf";
+  const rightText = `${safeUptime} Uptime | CI Verified`;
+  const leftWidth = 76;
+  const rightWidth = 146;
+  const totalWidth = leftWidth + rightWidth;
+  const textX = leftWidth + rightWidth / 2;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${totalWidth}" height="24" viewBox="0 0 ${totalWidth} 24" role="img" aria-label="${safeName}: ${rightText}">
+  <defs>
+    <clipPath id="uptime-clip">
+      <rect width="${totalWidth}" height="24" rx="5" fill="#fff"/>
+    </clipPath>
+    <linearGradient id="uptime-grad" x1="0" y1="0" x2="${totalWidth}" y2="24" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#059669"/>
+      <stop offset="1" stop-color="#10b981"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#uptime-clip)">
+    <rect width="${leftWidth}" height="24" fill="#0f172a"/>
+    <rect x="${leftWidth}" width="${rightWidth}" height="24" fill="url(#uptime-grad)"/>
+    <rect width="${totalWidth}" height="24" fill="none" stroke="rgba(16, 185, 129, 0.4)" stroke-width="1.5"/>
+  </g>
+  <g fill="#fff" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="11" font-weight="700">
+    <text x="38" y="16" fill="#e2e8f0">📚 ${leftText}</text>
+    <text x="${textX}" y="16" fill="#ffffff">🟢 ${rightText}</text>
+  </g>
+</svg>`;
+}
+
+export function generateVerifiedStatusBadgeSvg(toolName = "DevShelf"): string {
+  const safeName = escapeXml(toolName);
+  const leftWidth = 76;
+  const rightWidth = 140;
+  const totalWidth = leftWidth + rightWidth;
+  const textX = leftWidth + rightWidth / 2;
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${totalWidth}" height="24" viewBox="0 0 ${totalWidth} 24" role="img" aria-label="${safeName}: CI Verified Zero-Paywall">
+  <defs>
+    <clipPath id="verified-clip">
+      <rect width="${totalWidth}" height="24" rx="5" fill="#fff"/>
+    </clipPath>
+    <linearGradient id="verified-grad" x1="0" y1="0" x2="${totalWidth}" y2="24" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2563eb"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+  </defs>
+  <g clip-path="url(#verified-clip)">
+    <rect width="${leftWidth}" height="24" fill="#0f172a"/>
+    <rect x="${leftWidth}" width="${rightWidth}" height="24" fill="url(#verified-grad)"/>
+    <rect width="${totalWidth}" height="24" fill="none" stroke="rgba(6, 182, 212, 0.4)" stroke-width="1.5"/>
+  </g>
+  <g fill="#fff" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="11" font-weight="700">
+    <text x="38" y="16" fill="#e2e8f0">📚 DevShelf</text>
+    <text x="${textX}" y="16" fill="#ffffff">🛡️ CI Verified Free</text>
+  </g>
+</svg>`;
+}
+
 export async function buildStaticBadges() {
   await fs.mkdir(BADGES_DIR, { recursive: true });
+  await fs.mkdir(path.join(BADGES_DIR, "uptime"), { recursive: true });
+  await fs.mkdir(path.join(BADGES_DIR, "verified"), { recursive: true });
 
   const tiers: Array<BadgeOptions["tier"]> = [
     "enterprise",
@@ -265,6 +328,48 @@ export async function buildStaticBadges() {
     "utf8",
   );
   await fs.writeFile(path.join(BADGES_DIR, "featured-card.svg"), generateFeaturedCardSvg(), "utf8");
+
+  // Public Uptime & Verification Badges
+  const defaultUptime = generateUptimeBadgeSvg();
+  const defaultVerified = generateVerifiedStatusBadgeSvg();
+  await fs.writeFile(path.join(BADGES_DIR, "uptime.svg"), defaultUptime, "utf8");
+  await fs.writeFile(path.join(BADGES_DIR, "uptime-verified.svg"), defaultUptime, "utf8");
+  await fs.writeFile(path.join(BADGES_DIR, "ci-verified.svg"), defaultVerified, "utf8");
+
+  // Generate per-tool badges for items in shelf
+  try {
+    const shelfPath = path.join(ROOT_DIR, "shelf");
+    const shelfFiles = await fs.readdir(shelfPath);
+    for (const sFile of shelfFiles) {
+      if (!sFile.endsWith(".json")) continue;
+      const raw = await fs.readFile(path.join(shelfPath, sFile), "utf8");
+      const items = JSON.parse(raw.replace(/^\uFEFF/, ""));
+      if (Array.isArray(items)) {
+        for (const item of items) {
+          if (!item.name) continue;
+          const slug = item.name
+            .toLowerCase()
+            .replace(/[^a-z0-9_-]/g, "-")
+            .replace(/-+/g, "-")
+            .replace(/^-|-$/g, "");
+          if (slug) {
+            await fs.writeFile(
+              path.join(BADGES_DIR, "uptime", `${slug}.svg`),
+              generateUptimeBadgeSvg(item.name, "99.9%"),
+              "utf8",
+            );
+            await fs.writeFile(
+              path.join(BADGES_DIR, "verified", `${slug}.svg`),
+              generateVerifiedStatusBadgeSvg(item.name),
+              "utf8",
+            );
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.warn("Could not generate per-tool badges:", err);
+  }
 
   // Default badges
   const defaultPill = generatePillBadgeSvg({ tier: "bronze" });

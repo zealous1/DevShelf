@@ -19,6 +19,12 @@
       "title": "Random Free Developer Gem",
       "description": "Discover a random zero-paywall developer tool from the DevShelf catalog.",
       "mode": "view"
+    },
+    {
+      "name": "menu-bar-companion",
+      "title": "DevShelf Quick Menu Bar",
+      "description": "Menu bar companion widget for quick discovery and trending developer tools.",
+      "mode": "menu-bar"
     }
   ],
   "dependencies": {

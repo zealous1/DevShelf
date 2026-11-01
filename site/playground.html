@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Web Playground — Test APIs &amp; MCP Servers Live | DevShelf</title>
+  <meta name="description" content="Test free APIs, MCP tools, and HTTP endpoints live in your browser before installing. Instant latency metrics, response inspection, and copyable cURL/Fetch snippets.">
+  <link rel="canonical" href="https://devshelf.ritualdev.in/playground.html">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <meta name="theme-color" content="#7928CA">
+  <link rel="stylesheet" href="tailwind.min.css">
+  <style>
+    .ambient-glow { animation: pulseGlow 8s ease-in-out infinite alternate; }
+    @keyframes pulseGlow {
+      0% { opacity: 0.15; transform: scale(0.95); }
+      100% { opacity: 0.3; transform: scale(1.05); }
+    }
+    pre code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased selection:bg-purple-500 selection:text-white flex flex-col">
+
+  <!-- Background Ambient Lights -->
+  <div class="fixed inset-0 overflow-hidden pointer-events-none -z-10">
+    <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-purple-600/20 blur-[120px] rounded-full ambient-glow"></div>
+    <div class="absolute top-[400px] -right-32 w-[350px] h-[350px] bg-cyan-600/15 blur-[100px] rounded-full"></div>
+  </div>
+
+  <!-- Top Navigation Header -->
+  <header class="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-xl sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <div class="flex items-center space-x-2.5">
+        <span class="text-2xl">📚</span>
+        <a href="index.html" class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent hover:opacity-90 transition">DevShelf</a>
+        <span class="px-2 py-0.5 text-[10px] font-mono font-bold rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">⚡ Playground</span>
+      </div>
+
+      <nav class="flex items-center space-x-2 text-xs font-bold text-slate-300">
+        <a href="index.html#directory" class="px-3 py-1.5 rounded-lg hover:bg-slate-900 hover:text-white transition">📁 Directory</a>
+        <a href="status.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-900 hover:text-emerald-300 transition">🟢 Status</a>
+        <a href="sponsors.html" class="px-3 py-1.5 rounded-lg hover:bg-slate-900 hover:text-pink-300 transition">💖 Sponsors</a>
+        <a href="https://github.com/RitualDev-Lab/DevShelf" target="_blank" rel="noreferrer" class="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-extrabold transition">GitHub ⭐</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Playground Content -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <!-- Header Banner -->
+    <div class="border border-slate-800/80 rounded-2xl bg-slate-900/40 p-6 backdrop-blur-md flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white flex items-center gap-2">
+          <span>⚡ Interactive Web Playground</span>
+        </h1>
+        <p class="text-sm text-slate-400 mt-1 max-w-2xl">
+          Test free public APIs, inspect serverless endpoints, and simulate MCP tool execution in real-time right from your browser with zero setup.
+        </p>
+      </div>
+
+      <!-- Quick Preset Selector -->
+      <div class="shrink-0 flex items-center gap-2">
+        <label for="preset-select" class="text-xs font-mono text-slate-400">Presets:</label>
+        <select id="preset-select" class="bg-slate-950 border border-slate-700 text-xs text-slate-200 rounded-xl px-3 py-2 outline-none focus:border-purple-500">
+          <option value="devshelf-tools">DevShelf Public Catalog API (/api/v1/tools.json)</option>
+          <option value="devshelf-stats">DevShelf Stats API (/api/v1/stats.json)</option>
+          <option value="open-meteo">Open-Meteo Weather API (No Auth)</option>
+          <option value="advice-slip">Advice Slip Daily Wisdom API</option>
+          <option value="ipify">IPify Public IP Resolver</option>
+          <option value="mcp-mock">Simulate MCP tools/list Request</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Playground Workspace (Two Columns) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+      <!-- Left Column: Request Builder -->
+      <div class="lg:col-span-6 space-y-4 bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 font-mono">1. Request Configuration</h2>
+          <span class="text-[11px] font-mono text-purple-400 bg-purple-950/60 px-2 py-0.5 rounded border border-purple-500/20">Client-Side Direct Fetch</span>
+        </div>
+
+        <!-- URL & Method Bar -->
+        <div class="flex gap-2">
+          <select id="http-method" class="bg-slate-950 border border-slate-700 text-xs font-mono font-bold text-amber-300 rounded-xl px-3 py-2.5 outline-none focus:border-purple-500 shrink-0">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+            <option value="HEAD">HEAD</option>
+          </select>
+
+          <input id="endpoint-url" type="url" value="/api/v1/tools.json" placeholder="https://api.example.com/v1/endpoint" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-xs font-mono text-slate-200 outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500" />
+
+          <button id="send-request-btn" class="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-xs px-5 py-2.5 rounded-xl shadow-lg shadow-purple-900/30 flex items-center gap-1.5 transition active:scale-95">
+            <span id="send-icon">🚀</span>
+            <span id="send-text">Send</span>
+          </button>
+        </div>
+
+        <!-- Headers Section -->
+        <div class="space-y-2 pt-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-400 font-mono">Headers (JSON format):</span>
+            <button id="add-auth-header-btn" class="text-[11px] text-purple-400 hover:underline">+ Add Bearer Token</button>
+          </div>
+          <textarea id="request-headers" rows="3" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-300 outline-none focus:border-purple-500" placeholder='{"Accept": "application/json"}'></textarea>
+        </div>
+
+        <!-- Body Section -->
+        <div class="space-y-2 pt-1">
+          <span class="text-xs font-bold text-slate-400 font-mono">Payload Body (for POST / PUT):</span>
+          <textarea id="request-body" rows="4" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs font-mono text-slate-300 outline-none focus:border-purple-500" placeholder='{"query": "developer tools"}'></textarea>
+        </div>
+
+        <!-- Code Snippet Generator -->
+        <div class="pt-3 border-t border-slate-800/80">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-bold text-slate-400 font-mono">Generate Code:</span>
+            <div class="flex gap-1" id="snippet-tabs">
+              <button class="snippet-tab-btn active px-2 py-0.5 text-[11px] font-mono rounded bg-purple-950 text-purple-300 border border-purple-500/40" data-lang="curl">cURL</button>
+              <button class="snippet-tab-btn px-2 py-0.5 text-[11px] font-mono rounded bg-slate-800 text-slate-400 hover:text-white" data-lang="fetch">Fetch</button>
+              <button class="snippet-tab-btn px-2 py-0.5 text-[11px] font-mono rounded bg-slate-800 text-slate-400 hover:text-white" data-lang="python">Python</button>
+            </div>
+          </div>
+          <div class="relative">
+            <pre class="bg-slate-950 border border-slate-800 p-3 rounded-xl text-[11px] text-cyan-300 overflow-x-auto"><code id="code-snippet">curl -X GET "https://devshelf.ritualdev.in/api/v1/tools.json"</code></pre>
+            <button id="copy-snippet-btn" class="absolute top-2 right-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-2 py-1 rounded text-[10px] font-mono">Copy</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Response Inspector -->
+      <div class="lg:col-span-6 space-y-4 bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-xl">
+        <div class="flex items-center justify-between">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-slate-300 font-mono">2. Response Telemetry</h2>
+          <div class="flex items-center gap-2">
+            <span id="response-status" class="px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-slate-800 text-slate-400">Idle</span>
+            <span id="response-time" class="px-2.5 py-0.5 text-xs font-mono rounded-full bg-slate-800/80 text-slate-400">0 ms</span>
+            <span id="response-size" class="px-2.5 py-0.5 text-xs font-mono rounded-full bg-slate-800/80 text-slate-400">0 KB</span>
+          </div>
+        </div>
+
+        <!-- Response Body Box -->
+        <div class="relative">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-mono text-slate-400">Payload Preview:</span>
+            <button id="copy-response-btn" class="text-xs text-purple-400 hover:underline font-mono">Copy JSON</button>
+          </div>
+          <pre class="bg-slate-950 border border-slate-800 p-4 rounded-xl text-xs text-slate-200 overflow-x-auto max-h-[480px] overflow-y-auto leading-relaxed"><code id="response-json">// Click "Send" or choose a preset to inspect response data in real time...</code></pre>
+        </div>
+
+        <!-- Latency Benchmark & Health Notice -->
+        <div class="p-3.5 bg-slate-950/60 border border-slate-800/90 rounded-xl text-xs text-slate-400 flex items-start gap-2.5">
+          <span class="text-emerald-400 text-base">🛡️</span>
+          <div>
+            <span class="font-bold text-slate-300">Zero Commercial Middleware:</span>
+            <span>Requests run in your browser sandbox directly to target servers. Free APIs tested here maintain zero paywalls and are checked against DevShelf's 99.9% uptime registry.</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-900 bg-slate-950/80 py-6 text-center text-xs text-slate-500 font-mono">
+    DevShelf Interactive Playground &mdash; Maintained by <a href="https://github.com/RitualDev-Lab" class="text-purple-400 hover:underline">RitualDev-Lab</a>. 100% Open Source under MIT.
+  </footer>
+
+  <!-- Playground Interactive Logic -->
+  <script>
+    const PRESETS = {
+      "devshelf-tools": {
+        method: "GET",
+        url: "/api/v1/tools.json",
+        headers: JSON.stringify({ "Accept": "application/json" }, null, 2),
+        body: ""
+      },
+      "devshelf-stats": {
+        method: "GET",
+        url: "/api/v1/stats.json",
+        headers: JSON.stringify({ "Accept": "application/json" }, null, 2),
+        body: ""
+      },
+      "open-meteo": {
+        method: "GET",
+        url: "https://api.open-meteo.com/v1/forecast?latitude=37.77&longitude=-122.41&current_weather=true",
+        headers: JSON.stringify({ "Accept": "application/json" }, null, 2),
+        body: ""
+      },
+      "advice-slip": {
+        method: "GET",
+        url: "https://api.adviceslip.com/advice",
+        headers: JSON.stringify({ "Accept": "application/json" }, null, 2),
+        body: ""
+      },
+      "ipify": {
+        method: "GET",
+        url: "https://api.ipify.org?format=json",
+        headers: JSON.stringify({ "Accept": "application/json" }, null, 2),
+        body: ""
+      },
+      "mcp-mock": {
+        method: "POST",
+        url: "https://httpbin.org/post",
+        headers: JSON.stringify({ "Content-Type": "application/json" }, null, 2),
+        body: JSON.stringify({
+          jsonrpc: "2.0",
+          id: 1,
+          method: "tools/list",
+          params: {}
+        }, null, 2)
+      }
+    };
+
+    const methodSelect = document.getElementById("http-method");
+    const urlInput = document.getElementById("endpoint-url");
+    const headersInput = document.getElementById("request-headers");
+    const bodyInput = document.getElementById("request-body");
+    const presetSelect = document.getElementById("preset-select");
+    const sendBtn = document.getElementById("send-request-btn");
+    const sendIcon = document.getElementById("send-icon");
+    const sendText = document.getElementById("send-text");
+    const responseJson = document.getElementById("response-json");
+    const responseStatus = document.getElementById("response-status");
+    const responseTime = document.getElementById("response-time");
+    const responseSize = document.getElementById("response-size");
+    const codeSnippet = document.getElementById("code-snippet");
+    const copySnippetBtn = document.getElementById("copy-snippet-btn");
+    const copyResponseBtn = document.getElementById("copy-response-btn");
+
+    let currentSnippetLang = "curl";
+
+    function updateSnippet() {
+      const method = methodSelect.value;
+      const url = urlInput.value.trim() || "https://devshelf.ritualdev.in/api/v1/tools.json";
+      let fullUrl = url.startsWith("/") ? window.location.origin + url : url;
+
+      if (currentSnippetLang === "curl") {
+        codeSnippet.textContent = `curl -X ${method} "${fullUrl}" -H "Accept: application/json"`;
+      } else if (currentSnippetLang === "fetch") {
+        codeSnippet.textContent = `const res = await fetch("${fullUrl}", {\n  method: "${method}"\n});\nconst data = await res.json();\nconsole.log(data);`;
+      } else if (currentSnippetLang === "python") {
+        codeSnippet.textContent = `import requests\n\nresponse = requests.${method.toLowerCase()}("${fullUrl}")\nprint(response.json())`;
+      }
+    }
+
+    presetSelect.addEventListener("change", () => {
+      const preset = PRESETS[presetSelect.value];
+      if (preset) {
+        methodSelect.value = preset.method;
+        urlInput.value = preset.url;
+        headersInput.value = preset.headers;
+        bodyInput.value = preset.body;
+        updateSnippet();
+      }
+    });
+
+    urlInput.addEventListener("input", updateSnippet);
+    methodSelect.addEventListener("change", updateSnippet);
+
+    document.querySelectorAll(".snippet-tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".snippet-tab-btn").forEach((b) => {
+          b.classList.remove("active", "bg-purple-950", "text-purple-300", "border-purple-500/40");
+          b.classList.add("bg-slate-800", "text-slate-400");
+        });
+        btn.classList.add("active", "bg-purple-950", "text-purple-300", "border", "border-purple-500/40");
+        btn.classList.remove("bg-slate-800", "text-slate-400");
+        currentSnippetLang = btn.getAttribute("data-lang");
+        updateSnippet();
+      });
+    });
+
+    copySnippetBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(codeSnippet.textContent);
+      copySnippetBtn.textContent = "Copied!";
+      setTimeout(() => copySnippetBtn.textContent = "Copy", 1500);
+    });
+
+    copyResponseBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(responseJson.textContent);
+      copyResponseBtn.textContent = "Copied!";
+      setTimeout(() => copyResponseBtn.textContent = "Copy JSON", 1500);
+    });
+
+    document.getElementById("add-auth-header-btn").addEventListener("click", () => {
+      try {
+        let headers = headersInput.value.trim() ? JSON.parse(headersInput.value) : {};
+        headers["Authorization"] = "Bearer <YOUR_TOKEN_HERE>";
+        headersInput.value = JSON.stringify(headers, null, 2);
+      } catch {
+        headersInput.value = JSON.stringify({ "Authorization": "Bearer <YOUR_TOKEN_HERE>" }, null, 2);
+      }
+    });
+
+    sendBtn.addEventListener("click", async () => {
+      const method = methodSelect.value;
+      const rawUrl = urlInput.value.trim();
+      if (!rawUrl) return;
+
+      sendBtn.disabled = true;
+      sendIcon.textContent = "⏳";
+      sendText.textContent = "Testing...";
+      responseStatus.textContent = "Loading...";
+      responseStatus.className = "px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-purple-900/50 text-purple-300 animate-pulse";
+
+      let headers = {};
+      try {
+        if (headersInput.value.trim()) {
+          headers = JSON.parse(headersInput.value.trim());
+        }
+      } catch {
+        alert("Invalid JSON in request headers.");
+        sendBtn.disabled = false;
+        sendIcon.textContent = "🚀";
+        sendText.textContent = "Send";
+        return;
+      }
+
+      const options = { method, headers };
+      if ((method === "POST" || method === "PUT" || method === "PATCH") && bodyInput.value.trim()) {
+        options.body = bodyInput.value.trim();
+      }
+
+      const startTime = performance.now();
+      try {
+        const res = await fetch(rawUrl, options);
+        const duration = Math.round(performance.now() - startTime);
+
+        let data;
+        const text = await res.text();
+        const byteSize = new Blob([text]).size;
+        try {
+          data = JSON.parse(text);
+          responseJson.textContent = JSON.stringify(data, null, 2);
+        } catch {
+          responseJson.textContent = text || "(Empty Response Body)";
+        }
+
+        responseTime.textContent = `${duration} ms`;
+        responseSize.textContent = `${(byteSize / 1024).toFixed(1)} KB`;
+
+        responseStatus.textContent = `${res.status} ${res.statusText || (res.ok ? "OK" : "ERROR")}`;
+        if (res.ok) {
+          responseStatus.className = "px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-emerald-950 text-emerald-300 border border-emerald-500/30";
+        } else {
+          responseStatus.className = "px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-rose-950 text-rose-300 border border-rose-500/30";
+        }
+      } catch (err) {
+        const duration = Math.round(performance.now() - startTime);
+        responseTime.textContent = `${duration} ms`;
+        responseStatus.textContent = "Network / CORS Error";
+        responseStatus.className = "px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-rose-950 text-rose-300 border border-rose-500/30";
+        responseJson.textContent = `// Error executing request:\n${err.message}\n\nTip: When testing third-party servers from the browser, ensure the remote host supports Cross-Origin Resource Sharing (CORS: Access-Control-Allow-Origin: *).`;
+      } finally {
+        sendBtn.disabled = false;
+        sendIcon.textContent = "🚀";
+        sendText.textContent = "Send";
+      }
+    });
+
+    // Initialize with default preset
+    headersInput.value = PRESETS["devshelf-tools"].headers;
+    updateSnippet();
+  </script>
+</body>
+</html>

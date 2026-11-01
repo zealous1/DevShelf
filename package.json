@@ -25,7 +25,8 @@
   "packageManager": "pnpm@9.15.4",
   "bin": {
     "devshelf": "bin/cli.js",
-    "devshelf-mcp": "bin/mcp.js"
+    "devshelf-mcp": "bin/mcp.js",
+    "devshelf-companion": "bin/companion.js"
   },
   "engines": {
     "node": ">=20.0.0"

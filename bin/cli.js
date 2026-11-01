@@ -172,6 +172,8 @@ ${c.bold}USAGE:${c.reset}
   ${c.green}npx devshelf sponsors${c.reset}                        Display Wall of Patrons & verified backer ledger
   ${c.green}npx devshelf newsletter${c.reset}                      Read latest DevShelf Weekly issue & zero-paywall tools
   ${c.green}npx devshelf submit [options]${c.reset}                 Submit a new free developer tool via PR from terminal
+  ${c.green}npx devshelf companion [query]${c.reset}               Launch menu-bar offline quick launcher
+  ${c.green}npx devshelf playground${c.reset}                       Launch interactive Web API & MCP Playground
   ${c.green}npx devshelf mcp${c.reset}                             Launch DevShelf as a Model Context Protocol (MCP) server
   ${c.green}npx devshelf open <name>${c.reset}                      Open resource URL directly in browser
 
@@ -1101,6 +1103,18 @@ async function main() {
     console.log(`     ${c.underline}${c.blue}${githubPrUrl}${c.reset}\n`);
 
     openUrl(githubPrUrl);
+    return;
+  }
+
+  if (command === "companion") {
+    const { startCompanion } = await import("./companion.js");
+    await startCompanion(cleanArgs.slice(1));
+    return;
+  }
+
+  if (command === "playground") {
+    const { openPlayground } = await import("./companion.js");
+    openPlayground();
     return;
   }
 

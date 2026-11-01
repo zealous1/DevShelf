@@ -12,7 +12,13 @@ permissions:
 jobs:
   process-submission:
     name: Validate Submission & Open PR
-    if: contains(github.event.issue.labels.*.name, 'submission') || startsWith(github.event.issue.title, '[Submit Project]') || startsWith(github.event.issue.title, '[Submit API]')
+    if: >
+      contains(github.event.issue.labels.*.name, 'submission') ||
+      startsWith(github.event.issue.title, '[Submit') ||
+      startsWith(github.event.issue.title, '[Resource Submission]') ||
+      startsWith(github.event.issue.title, '[Tool Submission]') ||
+      startsWith(github.event.issue.title, '[API Submission]') ||
+      contains(github.event.issue.title, 'Submission')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

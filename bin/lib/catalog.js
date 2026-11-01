@@ -183,6 +183,26 @@ export async function loadCatalog(options = {}) {
     return refreshCatalog(options);
   }
 
+  // Explicit local preference (e.g. companion offline mode or local tooling)
+  if (options.preferLocal) {
+    const localDataPath = path.join(__dirname, "..", "..", "site", "data.json");
+    if (fs.existsSync(localDataPath)) {
+      try {
+        const raw = fs.readFileSync(localDataPath, "utf8");
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object" && Array.isArray(parsed.resources)) {
+          parsed.catalogSource = "bundled";
+          parsed.catalogTimestamp = parsed.updatedAt || new Date().toISOString();
+          parsed.milestone = getMilestone(parsed.totalCount || parsed.resources.length);
+          cachedCatalog = parsed;
+          return cachedCatalog;
+        }
+      } catch {
+        // Fall through
+      }
+    }
+  }
+
   const ttl = typeof options.maxAgeMs === "number" ? options.maxAgeMs : DEFAULT_CACHE_TTL_MS;
   const now = Date.now();
 

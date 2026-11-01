@@ -1,25 +1,34 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 
-interface ProjectSubmission {
+interface CatalogItem {
   name: string;
-  repo: string;
+  url?: string;
+  repo?: string;
   category: string;
   description: string;
-  language: string;
-  license: string;
+  language?: string;
+  license?: string;
+  auth?: string;
+  cors?: string;
+  rateLimit?: string;
+  freeTier?: string;
+  statusTags?: string[];
   featured?: boolean;
+  https?: boolean;
+  [key: string]: unknown;
 }
 
-interface ApiSubmission {
-  name: string;
-  url: string;
-  category: string;
-  description: string;
-  auth: string;
-  cors: string;
-  rateLimit: string;
-  https: boolean;
+function extractEmbeddedJson(text: string): Record<string, unknown> | null {
+  const match = text.match(/```(?:json)?\s*([\s\S]*?)\s*```/i);
+  if (match && match[1]) {
+    try {
+      return JSON.parse(match[1]);
+    } catch {
+      // Ignore parse failure, fallback to form parsing
+    }
+  }
+  return null;
 }
 
 function parseFormBody(body: string): Record<string, string> {
@@ -45,12 +54,44 @@ function parseFormBody(body: string): Record<string, string> {
   return sections;
 }
 
+function resolveTargetFile(category: string, targetShelf = ""): string {
+  const combined = `${targetShelf} ${category}`.toLowerCase();
+  if (combined.includes("testing") || combined.includes("qa")) {
+    return "testing-qa.json";
+  }
+  if (combined.includes("api") || combined.includes("rest") || combined.includes("graphql")) {
+    return "apis.json";
+  }
+  if (combined.includes("cloud") || combined.includes("hosting") || combined.includes("database")) {
+    return "free-cloud.json";
+  }
+  if (
+    combined.includes("ai") ||
+    combined.includes("llm") ||
+    combined.includes("agent") ||
+    combined.includes("gpt")
+  ) {
+    return "ai-tools.json";
+  }
+  if (combined.includes("perk") || combined.includes("discount") || combined.includes("student")) {
+    return "perks.json";
+  }
+  if (
+    combined.includes("boilerplate") ||
+    combined.includes("starter") ||
+    combined.includes("template")
+  ) {
+    return "boilerplates.json";
+  }
+  return "cli-tools.json";
+}
+
 async function verifyUrl(urlStr: string): Promise<boolean> {
   try {
     const parsed = new URL(urlStr);
-    if (parsed.protocol !== "https:") return false;
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 6000);
+    const timeout = setTimeout(() => controller.abort(), 7000);
     const res = await fetch(urlStr, {
       method: "HEAD",
       signal: controller.signal,
@@ -72,135 +113,173 @@ async function verifyUrl(urlStr: string): Promise<boolean> {
 
 async function run() {
   const issueBody = process.env.ISSUE_BODY;
-  const issueLabels = (process.env.ISSUE_LABELS || "").split(",");
+  const issueLabels = (process.env.ISSUE_LABELS || "")
+    .split(",")
+    .map((l) => l.trim().toLowerCase());
 
   if (!issueBody) {
     console.error("Missing ISSUE_BODY environment variable.");
     process.exit(1);
   }
 
-  const data = parseFormBody(issueBody);
   const root = process.cwd();
   const shelfDir = path.join(root, "shelf");
 
-  const isApi =
-    issueLabels.includes("api") || data["api name"] || data["api website or documentation url"];
+  // Check if issue has a pre-validated JSON block
+  const embedded = extractEmbeddedJson(issueBody);
+  const formData = parseFormBody(issueBody);
 
-  if (isApi) {
-    const name = data["api name"] || data.name;
-    const rawUrl = data["api website or documentation url"] || data.url || data["api url"] || "";
-    const url = rawUrl.trim().replace(/\/+$/, "");
-    const category = data.category || "Development & Testing";
-    let description = (
-      data["short description"] ||
-      data["short description (1-2 sentences)"] ||
-      data.description ||
-      ""
-    ).trim();
-    if (description.length > 300) {
-      description = `${description.slice(0, 297).replace(/\s+\S*$/, "")}...`;
-    }
-    const auth = data["authentication required"] || data.auth || "No Key";
-    const cors = data["cors support (usable from browser)"] || data.cors || "Yes";
-    const rateLimit = data["free tier rate limit"] || data["rate limit"] || "Unlimited";
+  const name = (
+    (embedded?.name as string) ||
+    formData["resource name"] ||
+    formData["project name"] ||
+    formData["tool name"] ||
+    formData["api name"] ||
+    formData.name ||
+    ""
+  ).trim();
 
-    if (!name || !url || !description) {
-      throw new Error("Missing required API fields (name, url, or description).");
-    }
+  const rawUrl = (
+    (embedded?.url as string) ||
+    (embedded?.repo as string) ||
+    formData["website / repo"] ||
+    formData.website ||
+    formData["github repository url"] ||
+    formData["repository url"] ||
+    formData["api website or documentation url"] ||
+    formData["repo url"] ||
+    formData.url ||
+    formData.repo ||
+    formData["github url"] ||
+    ""
+  ).trim();
 
-    const isLive = await verifyUrl(url);
-    if (!isLive) {
-      throw new Error(`URL failed verification check or is not reachable: ${url}`);
-    }
+  const cleanUrl = rawUrl
+    .replace(/^-\s*website:\s*/i, "")
+    .replace(/^-\s*repo:\s*/i, "")
+    .trim()
+    .replace(/\/+$/, "");
 
-    const filePath = path.join(shelfDir, "apis.json");
-    const raw = await fs.readFile(filePath, "utf8");
-    const list: ApiSubmission[] = JSON.parse(raw.replace(/^\uFEFF/, ""));
+  let description = (
+    (embedded?.description as string) ||
+    formData.description ||
+    formData["short description (1-2 sentences)"] ||
+    formData["short description"] ||
+    ""
+  ).trim();
 
-    if (list.some((item) => item.url.toLowerCase() === url.toLowerCase())) {
-      console.log(`API with URL ${url} is already listed.`);
-      return;
-    }
-
-    list.push({
-      name,
-      url,
-      category,
-      description,
-      auth,
-      cors,
-      rateLimit,
-      https: url.startsWith("https://"),
-    });
-
-    await fs.writeFile(filePath, `${JSON.stringify(list, null, 2)}\n`, "utf8");
-    console.log(`✅ Successfully added API: ${name}`);
-  } else {
-    // Project submission
-    const name = (data["project name"] || data.name || data["tool name"] || "").trim();
-    const rawRepo =
-      data["github repository url"] ||
-      data["repository url"] ||
-      data["repo url"] ||
-      data.repo ||
-      data["github url"] ||
-      "";
-    const repo = rawRepo.trim().replace(/\/+$/, "");
-    const category = data.category || "CLI & Developer Productivity";
-    let description = (
-      data["short description (1-2 sentences)"] ||
-      data["short description"] ||
-      data.description ||
-      ""
-    ).trim();
-    if (description.length > 300) {
-      description = `${description.slice(0, 297).replace(/\s+\S*$/, "")}...`;
-    }
-    const language =
-      data["primary language / stack"] || data.language || data.stack || "TypeScript";
-    const license = data["open source license"] || data.license || "MIT";
-
-    if (!name || !repo || !description) {
-      throw new Error("Missing required project fields (name, repo, or description).");
-    }
-
-    const isLive = await verifyUrl(repo);
-    if (!isLive) {
-      throw new Error(`Repository URL failed verification check: ${repo}`);
-    }
-
-    let targetFile = "cli-tools.json";
-    if (category.toLowerCase().includes("ai")) {
-      targetFile = "ai-tools.json";
-    } else if (
-      category.toLowerCase().includes("testing") ||
-      category.toLowerCase().includes("qa")
-    ) {
-      targetFile = "testing-qa.json";
-    }
-
-    const filePath = path.join(shelfDir, targetFile);
-    const raw = await fs.readFile(filePath, "utf8");
-    const list: ProjectSubmission[] = JSON.parse(raw.replace(/^\uFEFF/, ""));
-
-    if (list.some((item) => item.repo.toLowerCase() === repo.toLowerCase())) {
-      console.log(`Project with repo ${repo} is already listed.`);
-      return;
-    }
-
-    list.push({
-      name,
-      repo,
-      category,
-      description,
-      language,
-      license,
-      featured: false,
-    });
-
-    await fs.writeFile(filePath, `${JSON.stringify(list, null, 2)}\n`, "utf8");
-    console.log(`✅ Successfully added Project: ${name} to ${targetFile}`);
+  if (description.length > 300) {
+    description = `${description.slice(0, 297).replace(/\s+\S*$/, "")}...`;
   }
+
+  const category = (
+    (embedded?.category as string) ||
+    formData.category ||
+    formData["target shelf"] ||
+    formData.shelf ||
+    "CLI & Developer Productivity"
+  ).trim();
+
+  const targetShelf = (
+    formData["target shelf"] ||
+    (embedded?.section as string) ||
+    formData.shelf ||
+    ""
+  ).trim();
+
+  if (!name || !cleanUrl || !description) {
+    throw new Error(
+      `Missing required fields for submission. Extracted name='${name}', url='${cleanUrl}', description length=${description.length}`,
+    );
+  }
+
+  // Reachability check
+  const isLive = await verifyUrl(cleanUrl);
+  if (!isLive) {
+    console.warn(
+      `⚠️ Warning: URL did not respond to automated probe, continuing submission: ${cleanUrl}`,
+    );
+  }
+
+  const targetFile = resolveTargetFile(category, targetShelf);
+  const filePath = path.join(shelfDir, targetFile);
+  const rawContent = await fs.readFile(filePath, "utf8");
+  const list: CatalogItem[] = JSON.parse(rawContent.replace(/^\uFEFF/, ""));
+
+  // Check duplicate
+  const isDuplicate = list.some(
+    (item) =>
+      item.name.toLowerCase() === name.toLowerCase() ||
+      (item.url && item.url.toLowerCase().replace(/\/+$/, "") === cleanUrl.toLowerCase()) ||
+      (item.repo && item.repo.toLowerCase().replace(/\/+$/, "") === cleanUrl.toLowerCase()),
+  );
+
+  if (isDuplicate) {
+    console.log(`Resource '${name}' or URL '${cleanUrl}' is already listed in ${targetFile}.`);
+    return;
+  }
+
+  const isApiShelf = targetFile === "apis.json";
+  const item: CatalogItem = {
+    name,
+    category,
+    description,
+  };
+
+  if (isApiShelf) {
+    item.url = cleanUrl;
+    item.auth =
+      (embedded?.auth as string) ||
+      formData["authentication required"] ||
+      formData.auth ||
+      "No Key";
+    item.cors =
+      (embedded?.cors as string) ||
+      formData["cors support (usable from browser)"] ||
+      formData.cors ||
+      "Yes";
+    item.rateLimit =
+      (embedded?.rateLimit as string) ||
+      formData["free tier rate limit"] ||
+      formData.rateLimit ||
+      "Unlimited";
+    item.https = cleanUrl.startsWith("https://");
+  } else {
+    // For tools and frameworks, supply repo or url
+    if (
+      cleanUrl.includes("github.com") ||
+      cleanUrl.includes("gitlab.com") ||
+      cleanUrl.includes("bitbucket.org")
+    ) {
+      item.repo = cleanUrl;
+    } else {
+      item.repo = cleanUrl;
+      item.url = cleanUrl;
+    }
+    item.language =
+      (embedded?.language as string) ||
+      formData["primary language / stack"] ||
+      formData.language ||
+      formData.stack ||
+      "TypeScript";
+    item.license =
+      (embedded?.license as string) || formData["open source license"] || formData.license || "MIT";
+    item.featured = Boolean(embedded?.featured ?? false);
+  }
+
+  if (embedded?.freeTier || formData["free tier"]) {
+    item.freeTier = (embedded?.freeTier as string) || formData["free tier"];
+  }
+
+  if (Array.isArray(embedded?.statusTags)) {
+    item.statusTags = embedded.statusTags as string[];
+  } else if (formData["status tags"]) {
+    item.statusTags = formData["status tags"].split(",").map((t) => t.trim());
+  }
+
+  list.push(item);
+  await fs.writeFile(filePath, `${JSON.stringify(list, null, 2)}\n`, "utf8");
+  console.log(`✅ Successfully processed community submission: '${name}' into ${targetFile}`);
 }
 
 run().catch((err) => {

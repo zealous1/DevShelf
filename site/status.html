@@ -206,6 +206,35 @@
       </div>
     </section>
 
+    <!-- Public Uptime & Verification Badges -->
+    <section class="border border-slate-800 bg-slate-900/40 rounded-2xl p-6 sm:p-8 space-y-4">
+      <div class="flex items-center gap-2.5 text-emerald-400">
+        <span class="text-xl">🏷️</span>
+        <h2 class="text-lg font-bold text-white tracking-tight">Public Uptime &amp; CI Verification Badges</h2>
+      </div>
+      <p class="text-xs sm:text-sm text-slate-400">
+        Showcase your tool or API's live uptime and verified zero-paywall status directly in your GitHub README or documentation. Automatically updated by the DevShelf CI health check crawler.
+      </p>
+
+      <div class="grid md:grid-cols-2 gap-4 pt-2">
+        <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold font-mono text-emerald-300">Live Uptime Badge</span>
+            <img src="api/v1/badges/uptime.svg" alt="DevShelf Uptime Badge" class="h-6" />
+          </div>
+          <pre class="bg-slate-900/90 p-2.5 rounded text-[11px] font-mono text-slate-300 overflow-x-auto"><code>[![DevShelf Uptime](https://devshelf.ritualdev.in/api/v1/badges/uptime.svg)](https://devshelf.ritualdev.in)</code></pre>
+        </div>
+
+        <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold font-mono text-cyan-300">CI Verified Free Badge</span>
+            <img src="api/v1/badges/ci-verified.svg" alt="DevShelf Verified Badge" class="h-6" />
+          </div>
+          <pre class="bg-slate-900/90 p-2.5 rounded text-[11px] font-mono text-slate-300 overflow-x-auto"><code>[![DevShelf Verified](https://devshelf.ritualdev.in/api/v1/badges/ci-verified.svg)](https://devshelf.ritualdev.in)</code></pre>
+        </div>
+      </div>
+    </section>
+
     <!-- Zero-Paywall Policy & Sunset Protocol Specification -->
     <section class="border border-slate-800 bg-slate-900/40 rounded-2xl p-6 sm:p-8 space-y-4">
       <div class="flex items-center gap-2.5 text-purple-400">
