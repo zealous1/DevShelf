@@ -654,5 +654,18 @@
     "language": "TypeScript",
     "license": "MIT",
     "featured": true
+  },
+  {
+    "name": "VibeLocked LeakCheck",
+    "repo": "https://vibelocked.com/leakcheck/",
+    "url": "https://vibelocked.com/leakcheck/",
+    "category": "Security & Vulnerability Auditing",
+    "description": "Read-only security scan for vibe-coded apps: leaked keys, open data, missing headers. Permanent free scan; Pro adds deploy watching from US$15/mo.",
+    "language": "TypeScript, Next.js, Supabase",
+    "license": "Proprietary, permanent free scan (no card required)",
+    "auth": "No Key",
+    "freeTier": "Permanent free read-only scan; no account or card required. Not a trial.",
+    "statusTags": ["No Card Required"],
+    "featured": false
   }
 ]

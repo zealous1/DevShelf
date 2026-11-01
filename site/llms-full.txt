@@ -1,6 +1,6 @@
 # DevShelf - Complete Free Developer Tools Knowledge Base (Full Catalog)
 
-> Complete metadata dump of all 566 free and open-source developer tools indexed on DevShelf.
+> Complete metadata dump of all 567 free and open-source developer tools indexed on DevShelf.
 > Authoritative Source: https://devshelf.ritualdev.in
 > License: MIT
 
@@ -2723,6 +2723,16 @@
 - **URL**: https://github.com/RitualDev-Lab/web-sec-auditor
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/web-sec-auditor.html
 - **Description**: Unified DAST, SAST, secret hunter, and SCA vulnerability auditor for web apps and APIs. Emits OASIS SARIF v2.1.0 reports, executive HTML dashboards, and context-aware unified git diff auto-patches.
+
+### VibeLocked LeakCheck
+- **Category**: Security & Vulnerability Auditing
+- **Pricing Model**: Permanent free read-only scan; no account or card required. Not a trial.
+- **License**: Proprietary, permanent free scan (no card required)
+- **Language**: TypeScript, Next.js, Supabase
+- **Auth**: No Key
+- **URL**: https://vibelocked.com/leakcheck/
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/vibelocked-leakcheck.html
+- **Description**: Read-only security scan for vibe-coded apps: leaked keys, open data, missing headers. Permanent free scan; Pro adds deploy watching from US$15/mo.
 
 ### Open-Meteo
 - **Category**: Weather & Climate

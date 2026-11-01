@@ -1,14 +1,14 @@
 window.DEVSHELF_DATA = {
-  "updatedAt": "2026-11-01T09:04:39.568Z",
-  "totalCount": 566,
-  "reposCount": 356,
+  "updatedAt": "2026-11-01T14:51:39.498Z",
+  "totalCount": 567,
+  "reposCount": 357,
   "facets": {
-    "repos": 356
+    "repos": 357
   },
   "counts": {
     "aiTools": 99,
     "cliTools": 128,
-    "testingQa": 66,
+    "testingQa": 67,
     "apis": 108,
     "freeCloud": 72,
     "perks": 30,
@@ -4375,6 +4375,23 @@ window.DEVSHELF_DATA = {
       "language": "TypeScript",
       "license": "MIT",
       "featured": true,
+      "type": "testing",
+      "section": "Testing & QA Reliability"
+    },
+    {
+      "name": "VibeLocked LeakCheck",
+      "repo": "https://vibelocked.com/leakcheck/",
+      "url": "https://vibelocked.com/leakcheck/",
+      "category": "Security & Vulnerability Auditing",
+      "description": "Read-only security scan for vibe-coded apps: leaked keys, open data, missing headers. Permanent free scan; Pro adds deploy watching from US$15/mo.",
+      "language": "TypeScript, Next.js, Supabase",
+      "license": "Proprietary, permanent free scan (no card required)",
+      "auth": "No Key",
+      "freeTier": "Permanent free read-only scan; no account or card required. Not a trial.",
+      "statusTags": [
+        "No Card Required"
+      ],
+      "featured": false,
       "type": "testing",
       "section": "Testing & QA Reliability"
     },

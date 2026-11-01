@@ -4,7 +4,7 @@
 
 [← Back to Main Directory](../README.md) • [🌐 Live Search App](https://devshelf.ritualdev.in) • [➕ Submit New Resource](../README.md#-how-to-submit-your-project-or-api)
 
-[![Total Testing Tools](https://img.shields.io/badge/Testing_Tools-66_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
+[![Total Testing Tools](https://img.shields.io/badge/Testing_Tools-67_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
 
 **Jump to Subcategory:**
 [API Mocking & Sandboxes](#api-mocking-sandboxes) • [API Testing & Debugging](#api-testing-debugging) • [Browser & E2E Testing](#browser-e2e-testing) • [Contract & Schema Testing](#contract-schema-testing) • [Mobile & Device Testing](#mobile-device-testing) • [Performance & Load Testing](#performance-load-testing) • [Security & Vulnerability Auditing](#security-vulnerability-auditing) • [Security & Vulnerability Scanners](#security-vulnerability-scanners) • [Test Data Generation](#test-data-generation) • [Testing & QA Reliability](#testing-qa-reliability) • [Unit & Integration Testing](#unit-integration-testing)
@@ -87,11 +87,12 @@
 | [**Hey**](https://github.com/rakyll/hey) | `Go` | `Apache-2.0` | Tiny and fast command line load generator for web applications, a modern replacement for ApacheBench (ab). | [GitHub](https://github.com/rakyll/hey) |
 | [**Drill**](https://github.com/fcsonline/drill) | `Rust` | `GPL-3.0` | HTTP load testing tool written in Rust, inspired by Ansible syntax with support for benchmark assertions. | [GitHub](https://github.com/fcsonline/drill) |
 
-### <a id="security-vulnerability-auditing"></a>Security & Vulnerability Auditing (1)
+### <a id="security-vulnerability-auditing"></a>Security & Vulnerability Auditing (2)
 
 | Tool | Language | License | Description | Links |
 | :--- | :---: | :---: | :--- | :---: |
 | [**⭐ web-sec-auditor**](https://github.com/RitualDev-Lab/web-sec-auditor) | `TypeScript` | `MIT` | Unified DAST, SAST, secret hunter, and SCA vulnerability auditor for web apps and APIs. Emits OASIS SARIF v2.1.0 reports, executive HTML dashboards, and context-aware unified git diff auto-patches. | [GitHub](https://github.com/RitualDev-Lab/web-sec-auditor) |
+| [**VibeLocked LeakCheck**](https://vibelocked.com/leakcheck/) | `TypeScript, Next.js, Supabase` | `Proprietary, permanent free scan (no card required)` | Read-only security scan for vibe-coded apps: leaked keys, open data, missing headers. Permanent free scan; Pro adds deploy watching from US$15/mo. | [GitHub](https://vibelocked.com/leakcheck/) |
 
 ### <a id="security-vulnerability-scanners"></a>Security & Vulnerability Scanners (10)
 
