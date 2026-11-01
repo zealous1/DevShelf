@@ -1,9 +1,9 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-10-30T11:07:36.129Z",
+  "updatedAt": "2026-11-01T08:51:58.527Z",
   "slug": "testing",
   "name": "Testing & QA Automation",
-  "count": 64,
+  "count": 65,
   "items": [
     {
       "name": "AutoHeal-QA",
@@ -792,6 +792,17 @@
       "description": "OutageFence is a free, MIT-licensed local HTTP fault-injection CLI by Slanta Cause that checks whether synthetic sensitive values reach forbidden configured destinations when dependencies fail. It requires positive controls and exercised faults, then emits offline HTML, JSON, Markdown and JUnit...",
       "language": "JavaScript / Node.js 22+, with no third-party runtime packages.",
       "license": "MIT — copyright 2026 Slanta Cause.",
+      "featured": false,
+      "type": "testing",
+      "section": "Testing & QA Reliability"
+    },
+    {
+      "name": "Oh My Android",
+      "repo": "https://github.com/ateymoori/oh-my-android",
+      "category": "Mobile & Device Testing",
+      "description": "Free macOS control panel for the Android Emulator and real phones: dark mode, font scale, RTL, TalkBack, network throttling, GPS mock and a Layout Inspector in dp. Built-in MCP server for AI agents.",
+      "language": "Swift",
+      "license": "MIT",
       "featured": false,
       "type": "testing",
       "section": "Testing & QA Reliability"

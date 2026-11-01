@@ -1,6 +1,6 @@
 # DevShelf - Complete Free Developer Tools Knowledge Base (Full Catalog)
 
-> Complete metadata dump of all 548 free and open-source developer tools indexed on DevShelf.
+> Complete metadata dump of all 550 free and open-source developer tools indexed on DevShelf.
 > Authoritative Source: https://devshelf.ritualdev.in
 > License: MIT
 
@@ -2580,6 +2580,15 @@
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/outagefence-by-slanta-cause.html
 - **Description**: OutageFence is a free, MIT-licensed local HTTP fault-injection CLI by Slanta Cause that checks whether synthetic sensitive values reach forbidden configured destinations when dependencies fail. It requires positive controls and exercised faults, then emits offline HTML, JSON, Markdown and JUnit...
 
+### Oh My Android
+- **Category**: Mobile & Device Testing
+- **Pricing Model**: See official site for free access and limits
+- **License**: MIT
+- **Language**: Swift
+- **URL**: https://github.com/ateymoori/oh-my-android
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/oh-my-android.html
+- **Description**: Free macOS control panel for the Android Emulator and real phones: dark mode, font scale, RTL, TalkBack, network throttling, GPS mock and a Layout Inspector in dp. Built-in MCP server for AI agents.
+
 ### Open-Meteo
 - **Category**: Weather & Climate
 - **Pricing Model**: 10,000 req/day
@@ -3412,7 +3421,7 @@ Current limits: https://arcmira.com/docs/usage-and-billing
 - **Auth**: No Key
 - **URL**: https://unicum.gg/docs
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/unicumgg.html
-- **Description**: Free World of Tanks statistics API: player and clan profiles, WN7/WN8/WNX ratings, leaderboards, tank specifications, maps, tournaments and server population for the EU, NA and Asia servers. Open source, documented with an OpenAPI 3 spec (https://unicum.gg/api/openapi.json), and also exposed as a community MCP server.
+- **Description**: Free World of Tanks statistics API: player/clan profiles, WN7/WN8/WNX ratings, leaderboards, tank specs, maps, tournaments and server population for EU, NA and Asia. Open source with OpenAPI 3 spec (https://unicum.gg/api/openapi.json) and community MCP server.
 
 ### AgentSandboxes
 - **Category**: AI & Machine Learning
@@ -3437,6 +3446,14 @@ Current limits: https://arcmira.com/docs/usage-and-billing
 - **URL**: https://creditunions.fyi/developers
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/creditunions.html
 - **Description**: Directory of federally insured US credit unions from the NCUA register. Listings show charter, field of membership, assets and member count. Read-only JSON API, no key needed.
+
+### Bucketlist.nl Dream of the Day
+- **Category**: Entertainment & Media
+- **Pricing Model**: No numeric request quota or reset period is published in the official documentation. The selected content changes daily; that content schedule does not specify the number of permitted requests.
+- **Auth**: No Key
+- **URL**: https://bucketlist.nl/brand/droom-van-de-dag.openapi.json
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/bucketlistnl-dream-of-the-day.html
+- **Description**: A public JSON feed of daily travel, leisure and life-experience ideas with images, canonical URLs and source attribution. Developers can use it in activity-discovery interfaces and inspiration widgets; Netherlands/worldwide scope and five documented languages are supported.
 
 ### Supabase
 - **Category**: Databases & BaaS

@@ -1,6 +1,6 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-10-30T11:07:36.129Z",
+  "updatedAt": "2026-11-01T08:51:58.527Z",
   "totalCategories": 8,
   "categories": [
     {
@@ -18,7 +18,7 @@
     {
       "slug": "apis",
       "name": "Free Public APIs",
-      "count": 107,
+      "count": 108,
       "endpoint": "https://devshelf.ritualdev.in/api/v1/categories/apis.json"
     },
     {
@@ -30,7 +30,7 @@
     {
       "slug": "testing",
       "name": "Testing & QA Automation",
-      "count": 64,
+      "count": 65,
       "endpoint": "https://devshelf.ritualdev.in/api/v1/categories/testing.json"
     },
     {

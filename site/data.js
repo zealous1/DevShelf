@@ -1,15 +1,15 @@
 window.DEVSHELF_DATA = {
-  "updatedAt": "2026-10-30T11:07:36.129Z",
-  "totalCount": 548,
-  "reposCount": 339,
+  "updatedAt": "2026-11-01T08:51:58.527Z",
+  "totalCount": 550,
+  "reposCount": 340,
   "facets": {
-    "repos": 339
+    "repos": 340
   },
   "counts": {
     "aiTools": 90,
     "cliTools": 123,
-    "testingQa": 64,
-    "apis": 107,
+    "testingQa": 65,
+    "apis": 108,
     "freeCloud": 72,
     "perks": 30,
     "boilerplates": 41,
@@ -4203,6 +4203,17 @@ window.DEVSHELF_DATA = {
       "section": "Testing & QA Reliability"
     },
     {
+      "name": "Oh My Android",
+      "repo": "https://github.com/ateymoori/oh-my-android",
+      "category": "Mobile & Device Testing",
+      "description": "Free macOS control panel for the Android Emulator and real phones: dark mode, font scale, RTL, TalkBack, network throttling, GPS mock and a Layout Inspector in dp. Built-in MCP server for AI agents.",
+      "language": "Swift",
+      "license": "MIT",
+      "featured": false,
+      "type": "testing",
+      "section": "Testing & QA Reliability"
+    },
+    {
       "name": "Open-Meteo",
       "url": "https://open-meteo.com",
       "category": "Weather & Climate",
@@ -5835,7 +5846,7 @@ window.DEVSHELF_DATA = {
       "name": "unicum.gg",
       "url": "https://unicum.gg/docs",
       "category": "Entertainment & Media",
-      "description": "Free World of Tanks statistics API: player and clan profiles, WN7/WN8/WNX ratings, leaderboards, tank specifications, maps, tournaments and server population for the EU, NA and Asia servers. Open source, documented with an OpenAPI 3 spec (https://unicum.gg/api/openapi.json), and also exposed as a community MCP server.",
+      "description": "Free World of Tanks statistics API: player/clan profiles, WN7/WN8/WNX ratings, leaderboards, tank specs, maps, tournaments and server population for EU, NA and Asia. Open source with OpenAPI 3 spec (https://unicum.gg/api/openapi.json) and community MCP server.",
       "auth": "No Key",
       "cors": "Yes",
       "rateLimit": "No fixed quota, fair use. Every endpoint is free and keyless.",
@@ -5875,6 +5886,18 @@ window.DEVSHELF_DATA = {
       "auth": "No Key",
       "cors": "Yes",
       "rateLimit": "300 requests per 60 seconds",
+      "https": true,
+      "type": "api",
+      "section": "Free & Public APIs"
+    },
+    {
+      "name": "Bucketlist.nl Dream of the Day",
+      "url": "https://bucketlist.nl/brand/droom-van-de-dag.openapi.json",
+      "category": "Entertainment & Media",
+      "description": "A public JSON feed of daily travel, leisure and life-experience ideas with images, canonical URLs and source attribution. Developers can use it in activity-discovery interfaces and inspiration widgets; Netherlands/worldwide scope and five documented languages are supported.",
+      "auth": "No Key",
+      "cors": "Yes",
+      "rateLimit": "No numeric request quota or reset period is published in the official documentation. The selected content changes daily; that content schedule does not specify the number of permitted requests.",
       "https": true,
       "type": "api",
       "section": "Free & Public APIs"
