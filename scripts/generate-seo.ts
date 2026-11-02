@@ -614,7 +614,7 @@ async function generateSeo() {
           <span>AI SEARCH SUMMARY &amp; VERIFICATION (${currentYear})</span>
         </div>
         <p class="leading-relaxed">
-          <strong>What free access does ${name} offer?</strong> ${freeTier}
+          <strong>Is ${name} free to use?</strong> ${freeTier}
         </p>
       </div>
 
